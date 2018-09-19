@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ruozhi">
+    
+    <meta name="description" content="Nothing...">
+    
+    
+    
+    
+    
+    
+    <title>蓝鲸文件管理系统（塔主nb） | ruozhi</title>
+    <link href=”https://liey1.github.io“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="https://liey1.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/plan" class="menuItem" style="left: 50%; top: 85%;">计划</a>
+            <a href="/essays" class="menuItem" style="left: 19.6891%; top: 67.5%;">随笔</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://liey1.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">ruozhi</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/collections">
+                        <i class="fa fa-list"></i>收藏
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>蓝鲸文件管理系统（塔主nb）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/09/09/蓝鲸文件管理系统/">蓝鲸文件管理系统（塔主nb）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-09-09
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/09/09/蓝鲸文件管理系统/">蓝鲸文件管理系统（塔主nb）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-09-09
+            </p>
+            <p>
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h4 id="蓝鲸官网"><a href="#蓝鲸官网" class="headerlink" title="蓝鲸官网"></a><a href="http://www.whaledu.com/" target="_blank" rel="noopener">蓝鲸官网</a></h4><h4 id="本题源码"><a href="#本题源码" class="headerlink" title="本题源码"></a><a href="http://bmob-cdn-21455.b0.upaiyun.com/2018/09/09/da49d35740d0a254807e4ddcdbfb47e5.zip" target="_blank" rel="noopener">本题源码</a></h4><blockquote>
+<p>题目描述：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">蓝鲸为了整理自己的工具，开发了一个文件管理系统，本来对系统的功能很满意，可是为什么总有人把蓝鲸的文件名修改了？蓝鲸找到了机智的你帮助它审计代码~</span><br></pre></td></tr></table></figure>
+<hr>
+<p>这题一开始直接给了源码。</p>
+<blockquote>
+<p>首先先看看上传的代码（uplaod.php）：</p>
+</blockquote>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/2211237940a78ddc809f87631c995c10.png" alt="upload.php" title="1"></p>
+<p>这里两个关键点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 限制了文件的后缀名</span><br><span class="line">2. 插入进数据库</span><br></pre></td></tr></table></figure>
+<p>首先想想能不能这样：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/fe674eac40edd39980ec7dcbc916c2ef.png" alt="test.php" title="test.php"></p>
+<p>这样是不行得。。因为在下面的拼接文件名的时候用的也是这个后缀：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = $path_parts[<span class="string">"filename"</span>] . $path_parts[<span class="string">"extension"</span>]; <span class="comment">//此为上传的文件名</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>根据题目描述，我们看看 <code>rename.php</code>：</p>
+</blockquote>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/56324f5e40ebc80380af5a84c3636eb2.png" alt="rename.php" title="rename.php"></p>
+<p>这里的 <code>$req</code> 在 <code>common.inc.php</code> 中是这么定义的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foreach(array($_GET, $_POST, $_COOKIE) as $global_var) &#123;</span><br><span class="line">    foreach($global_var as $key =&gt; $value) &#123;</span><br><span class="line">        is_string($value) &amp;&amp; $req[$key] = addslashes($value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似自动解析了吧。</p>
+<hr>
+<blockquote>
+<p>采坑</p>
+</blockquote>
+<p>假设我们上传的文件名为：<code>test.jpg</code></p>
+<p>这无论如何都会在新文件名后加上 <code>$result[&#39;extension&#39;]</code></p>
+<p>在这里起初想绕过 <code>rename</code> ，即类似 <code>move_uploaded_file</code> 函数一样，传入  <code>windows</code> 文件名中不允许的字符，类似：<code>newname.php.php;.jpg</code> 或者 <code>newname.php.php/.jpg</code>(两个 <code>.php</code> 是因为在第22行会对<code>$newname</code>进行一次 <code>basename</code>操作)</p>
+<blockquote>
+<p>但是貌似 <code>rename</code> 函数会报错（总之就是不行，原谅我看不懂内核代码）</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>放弃这个想法，看了师傅的 WP 后发现：</p>
+</blockquote>
+<p>关键点在 23行的 <code>update</code> 语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update `file` set `filename`=&apos;&#123;$req[&apos;newname&apos;]&#125;&apos;, `oldname`=&apos;&#123;$result[&apos;filename&apos;]&#125;&apos; where `fid`=&#123;$result[&apos;fid&apos;]&#125;</span><br></pre></td></tr></table></figure>
+<p>$result 是在 第13行 根据传入的文件名查询出来的。</p>
+<p>这里把 <code>oldname</code> 字段设置成了 <code>$result[&#39;filename&#39;]</code>。</p>
+<h5 id="这里的-result-‘filename’-我们是可控的，且没有做任何过滤。"><a href="#这里的-result-‘filename’-我们是可控的，且没有做任何过滤。" class="headerlink" title="这里的 $result[‘filename’] 我们是可控的，且没有做任何过滤。"></a>这里的 $result[‘filename’] 我们是可控的，且没有做任何过滤。</h5><p>虽然传入的时候经过了 addslashes 的过滤（在 common.inc.php 中），但是查询出来后却没有过滤。</p>
+<p>可控有什么用呢？<br>前面分析过这里最大的问题在改的新名字会被强制加上 <code>$result[&#39;extension&#39;]</code>。但是这里是可以注入的，所以只要我们的文件名够骚，我们就能操作 <code>update</code> 语句，我们就可以将 <code>extension</code> 字段覆盖为空。</p>
+<p>比如：<code>&#39;,extension=&#39;&#39;,filename=&#39;test.jpg</code>（最后要为 <code>.jpg</code> ）</p>
+<p>此时数据库和文件夹里的情况：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d8d5dc2c40e738a380f2947902dcb9cb.png" alt="ans" title="ans"></p>
+<p>此时去改名，传入文件名：<code>&#39;,extension=&#39;&#39;,filename=&#39;test</code>(去掉后缀)<br>新文件名传入：test</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/a91a00d1407f8a8380ae75892b9499fb.png" alt="new" title="new"></p>
+<p>此时的sql语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql：update `file` set `filename`=&apos;test&apos;, `oldname`=&apos;&apos;,extension=&apos;&apos;,filename=&apos;test&apos; where `fid`=2</span><br></pre></td></tr></table></figure></p>
+<p>再看看：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/60f7deec404c8b818043914aa7eab397.png" alt="new2" title="new2"></p>
+<p>ok，成功踩坑。此时发现数据中的 filename 和 文件夹中的不同。下次 <code>rename</code> 的时候会找不到 <code>test</code> 文件（此时数据库中的 <code>extension</code> 已经为空）</p>
+<h3 id="last"><a href="#last" class="headerlink" title="last"></a>last</h3><p>我们把上传的文件名改改：<code>&#39;,extension=&#39;&#39;,filename=&#39;test.jpg.jpg</code></p>
+<p>此时的语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update `file` set `filename`=&apos;test&apos;, `oldname`=&apos;&apos;,extension=&apos;&apos;,filename=&apos;test.jpg&apos; where `fid`=3</span><br></pre></td></tr></table></figure></p>
+<p>会发现把 <code>filename</code> 设置成了 <code>test.jpg</code> 了，此时数据库与文件夹一致（不想截图了。。）</p>
+<p>再改次名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">oldname：test.jpg</span><br><span class="line">newname：test.php</span><br></pre></td></tr></table></figure></p>
+<p>即可。</p>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            ruozhi
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"><p>Nothing…</p>
+</p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/11/一道简单的 PWN 题/">一道简单的 PWN 题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/蓝鲸文件管理系统/">蓝鲸文件管理系统（塔主nb）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/hello-world/">Nothing。。。</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                
+                <li class="">
+                    <a href="/2018/09/09/蓝鲸文件管理系统/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                </li>
+                <li class="">
+                    <a href="/2018/09/09/蓝鲸文件管理系统/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="https://hl0rey.github.io" target="_blank">hl0rey</a>
+    </li>
+    
+    <li>
+        <a href="https://yuyue123am.github.io/" target="_blank">小铭同学</a>
+    </li>
+    
+    <li>
+        <a href="http://www.mzxh.xyz/" target="_blank">墨竹星海</a>
+    </li>
+    
+    <li>
+        <a href="https://zzzzxycc.github.io/" target="_blank">zzzzxycc</a>
+    </li>
+    
+    <li>
+        <a href="https://damit5.com" target="_blank">damit5</a>
+    </li>
+    
+    <li>
+        <a href="http://blog.yanqin.net.cn/" target="_blank">燕青</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="https://github.com" target="_blank">github</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com" target="_blank">知乎</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 ruozhi Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+
+</html>

