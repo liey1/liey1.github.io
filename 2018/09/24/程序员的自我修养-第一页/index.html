@@ -12,7 +12,7 @@
     
     
     
-    <title>surprised | ruozhi</title>
+    <title>程序员的自我修养-第一页 | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -172,21 +172,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
-
-
+                    
 <article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>程序员的自我修养-第一页</span>
+    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/surprised/index.html">surprised</a>
+                <a href="/2018/09/24/程序员的自我修养-第一页/">程序员的自我修养-第一页</a>
             </h1>
         </div>
         <div class="tag-article">
+            
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-09-09
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/读书笔记/">读书笔记</a>
+                
             </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-09-24
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -194,19 +207,95 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/surprised/index.html">surprised</a>
+                    <a href="/2018/09/24/程序员的自我修养-第一页/">程序员的自我修养-第一页</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-09-09
+                <i class="fa fa-calendar"></i> 2018-09-24
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/读书笔记/">读书笔记</a>
+                
+                
+                
             </p>
         </center>
     </div>
     <div class="content-article">
-        <h1 id="heheh"><a href="#heheh" class="headerlink" title="heheh :)"></a>heheh :)</h1>
+        <hr>
+<h2 id="1-2-万变不离其宗"><a href="#1-2-万变不离其宗" class="headerlink" title="1.2 万变不离其宗"></a>1.2 万变不离其宗</h2><blockquote>
+<p>讲了南桥北桥PCI</p>
+</blockquote>
+<p><code>看不懂看不懂。</code></p>
+<blockquote>
+<p>SMP 与多核</p>
+</blockquote>
+<p>什么是 <code>SMP</code>：对称多处理器（Symmetrical Multi-Processing），就是多个 <code>CPU</code> 咯。<br>什么是 <code>多核</code>：两个 <code>CPU</code> 你也买不起，所以良心的资本家们将 <code>CPU</code> 中的 缓存部件共享（据说是比较贵），把核心保留起来。即:<code>多个核心+一个缓存部件</code></p>
+<p><code>除非你想把 CPU 的每一滴油水都榨干，否则可以把多多核和 SMP 看成同一个概念</code></p>
+<p>为什么不升级 CPU 本身而添加多核来提速呢？</p>
+<p>因为人们在制造 CPU 的工艺方面已经达到了物理极限，除非制造工艺有本质的突破。否则 <code>4GHZ</code> 就是 CPU 的天花板了。</p>
+<h2 id="1-3-站得高，望得远"><a href="#1-3-站得高，望得远" class="headerlink" title="1.3 站得高，望得远"></a>1.3 站得高，望得远</h2><p><code>Any problem in computer science can be solved by another layer of indrection.</code></p>
+<p>这节应该是强调了接口的概念：</p>
+<h3 id="接口？"><a href="#接口？" class="headerlink" title="接口？"></a>接口？</h3><blockquote>
+<p>什么是接口？</p>
+</blockquote>
+<p>下层实现，上层使用。</p>
+<p>比如类库中封装了 <code>printf</code> 函数。写代码的时候无需考虑 <code>printf</code> 用汇编的实现方式。所以 Windows 的 C 代码到了 Linux 依然可以编译，即使底层实现 <code>printf</code> 的方法不同（应该不同吧？）</p>
+<p>什么是 <code>硬件规格</code>：驱动程序操作硬件的 <code>接口</code>，定义了如何与硬件通信</p>
+<h2 id="1-4-操作系统做什么"><a href="#1-4-操作系统做什么" class="headerlink" title="1.4 操作系统做什么"></a>1.4 操作系统做什么</h2><h3 id="1-41-别让-CPU-打盹"><a href="#1-41-别让-CPU-打盹" class="headerlink" title="1.41 别让 CPU 打盹"></a>1.41 别让 CPU 打盹</h3><blockquote>
+<p>多道程序的出现</p>
+</blockquote>
+<p>什么是多道程序呢： 聪明的程序员为了让 CPU 忙碌起来，写了个监控程序，当当前程序暂时无需使用 CPU 时（读写硬盘），监控程序就把 CPU 让给正在等待的程序。这就是多到程序。</p>
+<p>多道程序的缺点： 没有优先级，所以有些很急的任务要等很久。想象一下如果点击一下鼠标，十分钟之后才等到 CPU 处理。。</p>
+<blockquote>
+<p>进化成分时系统吧</p>
+</blockquote>
+<p>什么是分时系统： 每个程序在运行一段时间后，程序 <code>主动</code> 让出 CPU 给其他程序。Windows早期版本（如 <code>Windows 3.1</code> 就是这种模式）。程序调用系统接口 <code>Yield 、GetMessage、PeekMessage</code> 时，<code>Window3.1</code> 会判断是否有其他程序正在等待 <code>CPU</code> ，如果有，就暂停当前程序，把 <code>CPU</code> 让给其他程序。</p>
+<p>分时系统缺点： 但是，注意这是程序 <code>主动</code> 让出 <code>CPU</code> 啊。程序要是 <code>while(1)</code> 那你可咋办哟~</p>
+<blockquote>
+<p>多任务系统才是王道啊</p>
+</blockquote>
+<p>什么是多任务系统： 操作系统接管了所有硬件资源并且本身运行在一个受硬件保护的级别。所有应用程序都以 <code>进程</code> 的方式运行在比操作系统权限更低的级别（作弊了呀）。</p>
+<p><code>抢占式</code>是什么： CPU 由操作系统分配。每个进程根据优先级都有机会得到 CPU。但如果运行超过一定时间，系统会暂停该进程，将 CPU 资源分配给其他正在等待的程序。</p>
+<p>（这个模式是操作系统强制剥夺 CPU 资源啊~）</p>
+<p>多任务的缺点： 书中没说他有缺点，那就当他没有缺点吧。</p>
+<h3 id="1-42-设备驱动"><a href="#1-42-设备驱动" class="headerlink" title="1.42 设备驱动"></a>1.42 设备驱动</h3><blockquote>
+<p>这一小节看的我想死，所以没有笔记</p>
+</blockquote>
+<h2 id="1-5-内存不够怎么办？"><a href="#1-5-内存不够怎么办？" class="headerlink" title="1.5 内存不够怎么办？"></a>1.5 内存不够怎么办？</h2><p>早期程序是直接运行在物理内存的。</p>
+<p>假设当前计算机物理空间有 128M ，<code>程序A</code> 需要 10M， <code>程序B</code> 需要 100M，<code>程序C</code> 需要 20M，如果需要同时运行 A 和 B，那么可以很直接的将物理内存中 0-10M 分配给 A，10-110 分配给 B。</p>
+<p>很明显会造成很多问题：</p>
+<ol>
+<li><p>地址空间不隔离<br>所有程序都直接访问物理内存，程序A 可以直接访问 程序B 的数据甚至代码。 </p>
+</li>
+<li><p>使用效率低<br>由于没有管理机制，所以如果现在要运行 C 的话。需要将其他程序暂时移到磁盘里去。但是程序需要连续的空间，所以移动 A 肯定是不够的，所以只能移 B。可以看到整个过程有大量的数据在换入换出，导致效率十分低下</p>
+</li>
+<li><p>运行的地址不确定<br>每次分配的空间地址都不确定，但是数据和跳转时的目标地址都是固定的。这就涉及到重定向的问题了，会在以后讨论</p>
+</li>
+</ol>
+<h3 id="1-51-关于隔离"><a href="#1-51-关于隔离" class="headerlink" title="1.51 关于隔离"></a>1.51 关于隔离</h3><p>第一个问题就是隔离，怎么解决呢？</p>
+<p>聪明的程序员们建立了一个概念：虚拟地址空间。</p>
+<p>虚拟地址空间：假的，不存在的。每个进程只能访问自己的地址空间，有效的做到了隔离<br>物理地址空间：和名字一样，物理存在的。如果地址线有 32 条，那么物理空间就有 2^32 字节（4G）。但是如果你只装了 512 MB 的内存，那物理地址的有效部分为： 0x00000000 ~ 0x1FFFFFFF</p>
+<h3 id="1-52-分段"><a href="#1-52-分段" class="headerlink" title="1.52 分段"></a>1.52 分段</h3><p>分段的基本概念：说回上面的 程序 A 和 程序 B。假设有一个 地址从 0x0000000 到 0x00A00000 的 10M 虚拟空间。然后在物理地址中挑选一块相同大小的空间：0x00110000 到 0x00B10000，将这两块地址空间一一映射。（由软件映射，别问什么软件）</p>
+<p>这里解决了上面提到的 第一个 和 第三个问题：两块没有重叠的空间，当 A 访问超出 0x00A0000 的时候，硬件就会判断这是个非法访问。 </p>
+<blockquote>
+<p>局部性原理</p>
+</blockquote>
+<p>但是第二个问题还是没变啊，依然是每个整个程序的搬入搬出。<br>聪明的程序员总是有解决办法，他们发现：当一个程序运行时，在某个时间段内，只是频繁的使用一小部分数据，也就是说很多数据一段时间内不会被访问到，这就是 tmd <code>局部性原理</code>。</p>
+<p>怎么利用起来了呢？程序员们给方法起了个名：<code>分页</code>。</p>
+<h3 id="1-53-分页"><a href="#1-53-分页" class="headerlink" title="1.53 分页"></a>1.53 分页</h3><p>分页的就是把地址空间人为的分成固定大小的页，页的大小由硬件决定，或者硬件支持多种大小的页，由操作系统选择。</p>
+<p>加载一个程序时先将程序虚拟地址分页，然后将常用的页映射到物理内存，不常用的存在磁盘中（不同程序的有些虚拟页被映射到同一个物理页，实现内存共享）。</p>
+<p>那要访问磁盘中的页时怎么办呢？此时硬件捕获到一个信息：<code>页错误</code>，然后阻塞该程序，将磁盘中的页换入内存中。</p>
+<p>当然也要保护页啦，就好像上面提到的 两个程序用到同一个页时，这个页最好是不能被修改的，不然其中一个修改，另一个可能就读不到想要的数据/代码。每个页都可以设置权限属性，修改这些属性的权限也只有操作系统有。详细的介绍会放在日后。。。（不是我想放在日后）</p>
+<p>虚拟内存的实现需要依靠硬件支持，对不同 CPU 来说是不同的，但是几乎所有的硬件都采用一个叫 MMU 的部件进行页映射，CPU 发出 虚拟地址 经过 MMU 转换成实际地址。 MMU 一般都集成在 CPU 内部。</p>
+<h2 id="1-6-众人拾材火焰高"><a href="#1-6-众人拾材火焰高" class="headerlink" title="1.6 众人拾材火焰高"></a>1.6 众人拾材火焰高</h2><h3 id="1-61-线程基础"><a href="#1-61-线程基础" class="headerlink" title="1.61 线程基础"></a>1.61 线程基础</h3><p>一个标准的线程有：线程ID，当前指令指针，寄存器集合和堆栈。</p>
+<hr>
+
     </div>
 </article>
-
 
 
                 </div>
@@ -293,10 +382,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/surprised/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/09/24/程序员的自我修养-第一页/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/surprised/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/09/24/程序员的自我修养-第一页/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
