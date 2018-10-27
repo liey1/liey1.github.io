@@ -12,7 +12,7 @@
     
     
     
-    <title>不知道什么时候能提上日程的近期计划 👇 | ruozhi</title>
+    <title>堆笔记1 | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -176,21 +176,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
-
-
+                    
 <article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>堆笔记1</span>
+    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/plan/index.html">不知道什么时候能提上日程的近期计划 👇</a>
+                <a href="/2018/10/22/堆笔记1/">堆笔记1</a>
             </h1>
         </div>
         <div class="tag-article">
+            
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-09-20
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/ctf/">ctf</a>
+                
             </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-10-22
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -198,28 +211,81 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/plan/index.html">不知道什么时候能提上日程的近期计划 👇</a>
+                    <a href="/2018/10/22/堆笔记1/">堆笔记1</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-09-20
+                <i class="fa fa-calendar"></i> 2018-10-22
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+                
+                
             </p>
         </center>
     </div>
     <div class="content-article">
-        <blockquote>
-<p>2019-09-20</p>
+        <h3 id="1-什么是-chunk"><a href="#1-什么是-chunk" class="headerlink" title="1. 什么是 chunk"></a>1. 什么是 chunk</h3><p>由 malloc 申请的内存称为 chunk</p>
+<h3 id="2-chunk-结构"><a href="#2-chunk-结构" class="headerlink" title="2. chunk 结构"></a>2. chunk 结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct malloc_chunk &#123;</span><br><span class="line"></span><br><span class="line">  INTERNAL_SIZE_T      prev_size;  /* Size of previous chunk (if free).  */</span><br><span class="line">  INTERNAL_SIZE_T      size;       /* Size in bytes, including overhead. */</span><br><span class="line"></span><br><span class="line">  struct malloc_chunk* fd;         /* double links -- used only if free. */</span><br><span class="line">  struct malloc_chunk* bk;</span><br><span class="line"></span><br><span class="line">  /* Only used for large blocks: pointer to next larger size.  */</span><br><span class="line">  struct malloc_chunk* fd_nextsize; /* double links -- used only if free. */</span><br><span class="line">  struct malloc_chunk* bk_nextsize</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>chunk 字段解释</p>
 </blockquote>
+<p>prev_size ： 如果前一个chunk空闲，则该字段表示前一个chunk的大小。如果前一个chunk 非空闲状态，则此处作为前一个 chunk 的数据部分（即被前一个chunk使用）。</p>
+<p>size ： 记录当前块的大小，必须为 2 * SIZE_T 的整数倍（SIZE_T 在32位为4，64位为8）该字段的低三位和大小没关系，分别为：</p>
+<pre><code>1. NON_MAIN_ARENA 记录该 chunk 是否属于主线程
+2. IS_MAPPED  记录当前 chunk 是否由 mmap 分配
+3. PREV_INUSE 记录前一个 chunk 是否被分配（第一个被分配的 chunk 的 P位都会设置成 1，防止访问前面的非法内存）。当该位为 0 时，可以用 prev_size 字段获得上个 chunk 的大小和地址。也方便空闲块的合并
+</code></pre><p>fd： 如果该 chunk 被分配，从此处开始就是用户的数据，否则指向上一个空闲 chunk<br>bk： 指向上一个空闲的 chunk</p>
+<p>fd_nextsize： 指向前一个与当前 chunk 大小不同的空闲块<br>bk_nextsize： 指向后一个与当前 chunk 大小不同的空闲块</p>
+<h2 id="3-bins"><a href="#3-bins" class="headerlink" title="3. bins"></a>3. bins</h2><blockquote>
+<p>什么是 bins</p>
+</blockquote>
+<p>用户释放掉的 <code>chunk</code> 不会立马归还给系统，而是程序保留管理着，这样下次再分配时无需系统调用，节省资源。</p>
+<p>ptmalloc 将 chunk 分为四类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fast bins</span><br><span class="line">unsorted bins</span><br><span class="line">small bins</span><br><span class="line">large bins</span><br></pre></td></tr></table></figure></p>
+<p>对于后三个 bins，ptmalloc 将他们分在同一个数组中，结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define NBINS 128</span><br><span class="line">/* Normal bins packed as described above */</span><br><span class="line">mchunkptr bins[ NBINS * 2 - 2 ];</span><br></pre></td></tr></table></figure></p>
+<p>数组中的 bins 顺序如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 数组第一个为 unsorted bin ，没有排序，内部 chunk 比较杂</span><br><span class="line">2. 数组中第 2 到 63 个为 small bin ， 同一个 small bin 链中的大小相同，两个相邻的 small bin 链中的大小相差字节数为 2*机器字长（即 32 位相差8 ，64位相差 16）</span><br><span class="line">3. 后面的为 large bins，chunk 的 fd 按从大到小排序。</span><br></pre></td></tr></table></figure></p>
+<p>当然还有上面提到的 fast bins，ptmalloc 为了提高分配速度，会把一些小的 bins 分配到 fast bins 中，fast bins 中的每个 P 位（chunk 的使用标记）都被设置为 1，所以不会被合并起来。</p>
+<h2 id="4-bins-们"><a href="#4-bins-们" class="headerlink" title="4. bins 们"></a>4. bins 们</h2><h3 id="4-1-fast-bin"><a href="#4-1-fast-bin" class="headerlink" title="4.1 fast bin"></a>4.1 fast bin</h3><p>为了提高分配效率而设计的 fast bin 将存储一些较小的内存块，它们的 <code>使用位</code><br>永远被置为 1，所以不会被合并起来。</p>
+<p>看两个宏：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#ifndef DEFAULT_MXFAST</span><br><span class="line">#define DEFAULT_MXFAST (64 * SIZE_SZ / 4)</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#define MAX_FAST_SIZE (80 * SIZE_SZ / 4)</span><br><span class="line"></span><br><span class="line">#define set_max_fast(s)                                                        \</span><br><span class="line">    global_max_fast =                                                          \</span><br><span class="line">        (((s) == 0) ? SMALLBIN_WIDTH : ((s + SIZE_SZ) &amp; ~MALLOC_ALIGN_MASK))</span><br><span class="line">#define get_max_fast() global_max_fast</span><br></pre></td></tr></table></figure></p>
 <ol>
-<li>把 PWN 入门早点结束吧（求你了）</li>
-<li>每周学习一个 Web 安全</li>
-<li>读完码农翻身</li>
-<li>读完程序员的自我修养</li>
+<li>ptmalloc 首先会调用 <code>set_max_fast</code> 并把 <code>DEFAULT_MXFAST</code>  传进去，也就是设置 fast bins 中 chunk 的最大值。</li>
+<li>MAX_FAST_SIZE 为 0 时，系统就不会支持 fastbin 。</li>
+<li>当申请空间一个小于或等于 <code>global_max_fast</code> 时，ptmalloc 首先会在 fast bin 查询是否有合适大小的块。</li>
+</ol>
+<p>再来看个东西：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#define FASTBIN_CONSOLIDATION_THRESHOLD (65536UL)</span><br></pre></td></tr></table></figure></p>
+<p>当释放的 chunk 与该 chunk 相邻的空闲 chunk 合并后大于 <code>FASTBIN_CONSOLIDATION_THRESHOLD</code>，表明内存碎片比较多了，我们就需要把 <code>fast bins</code> 中的 chunk 都进行合并。</p>
+<p><code>malloc_consolidate</code> 函数可以释放后所有 fastbins 并且将他们和其他的 空闲块 合并。</p>
+<h3 id="4-2-small-bin"><a href="#4-2-small-bin" class="headerlink" title="4.2 small bin"></a>4.2 small bin</h3><p>small bins 有 62 个双向链表，每个链表存储的大小都一致。</p>
+<p>small bins 中每个链表的大小都有规律，即：chunk_size = 2<em>SIZE_INDEX</em>index，例如在 32 位系统下下标为 <code>2</code> 的链表的大小为 2<em>4</em>2 = 16 个字节。</p>
+<p>当然，fast bin 中的 chunk 是有可能会被放到 small bin 中去的，因为他们确实有些重合了。</p>
+<h3 id="4-3-large-bin"><a href="#4-3-large-bin" class="headerlink" title="4.3 large bin"></a>4.3 large bin</h3><ol>
+<li>large bins 共有 63个 bin，每个 bin 中的大小不一致，但有个差值。</li>
+<li>每个 bin 中的 chunk 大小之间公差一致。</li>
+<li>第一个 large bin 的起始 chunk 大小为 512 字节，该组公差为 64B，所以该组可以存储 chunk 的大小范围为： [512,512+64)</li>
+</ol>
+<h3 id="4-4-unsorted-bin"><a href="#4-4-unsorted-bin" class="headerlink" title="4.4 unsorted bin"></a>4.4 unsorted bin</h3><ol>
+<li>乱序的 bins</li>
+<li>放进 unsorted bin 的 chunk 来自：<ol>
+<li>分割完大块后剩余部分，并且该部分要大于 MINSIZE</li>
+<li>释放不属于 fast bin 的 chunk 并且 该 chunk 不和 top chunk 紧邻。</li>
+</ol>
+</li>
+</ol>
+<h3 id="4-5-top-chunk"><a href="#4-5-top-chunk" class="headerlink" title="4.5 top chunk"></a>4.5 top chunk</h3><ol>
+<li>简单理解就是在地址最高的一个 chunk，不属于任何 bins。</li>
+<li>当程序需要分配的内存大小在 bins 中都不满足的情况下，尝试用 <code>top chunk</code> 给程序分配，如果够，则剩余部分继续做 <code>top chunk</code>，如果不够，则申请扩展内存后再分配。</li>
+<li>当邻近 <code>top chunk</code> 的 <code>chunk</code> 被释放后，会合并到 <code>top chunk</code> 中</li>
+</ol>
+<h3 id="4-6-last-remainder"><a href="#4-6-last-remainder" class="headerlink" title="4.6 last remainder"></a>4.6 last remainder</h3><ol>
+<li>当在 <code>small chunk</code> 找不到合适的块时，如果 <code>last remainder chunk</code> 大于要分配的内存，则分割这个 <code>chunk</code> 给用户并将剩余部分继续作为 <code>last remainder chunk</code>，该块好像是放在 <code>unsorted bins</code> 中的。</li>
 </ol>
 
     </div>
 </article>
-
 
 
                 </div>
@@ -312,10 +378,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/plan/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/10/22/堆笔记1/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/plan/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/10/22/堆笔记1/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
