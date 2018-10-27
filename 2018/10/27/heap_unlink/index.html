@@ -146,11 +146,11 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/读书笔记/">读书笔记</a>
+                            <a href="/tags/CTF/">CTF</a>
                         </li>
                         
                         <li>
-                            <a href="/tags/CTF/">CTF</a>
+                            <a href="/tags/读书笔记/">读书笔记</a>
                         </li>
                         
                         
@@ -272,29 +272,34 @@
 <thead>
 <tr>
 <th>字段</th>
+<th>—–</th>
 <th>值</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>prev_size</td>
+<td>—–</td>
 <td>偶数（最后一位为 P 位，只要是偶数最后一位就为 0，因此偶数即可）</td>
 </tr>
 <tr>
 <td>size</td>
+<td>—–</td>
 <td>-4 （减去4，指向了自己）</td>
 </tr>
 <tr>
 <td>fd</td>
+<td>—–</td>
 <td>GOT入口-12</td>
 </tr>
 <tr>
 <td>bk</td>
+<td>—–</td>
 <td>shellcode 地址</td>
 </tr>
 </tbody>
 </table>
-<p>回顾一下前面的代码：free(first)</p>
+<p><code>回顾一下前面的[4]：free(first)</code></p>
 <blockquote>
 <p>执行这句话的时候发生了什么？</p>
 </blockquote>
