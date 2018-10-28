@@ -229,11 +229,12 @@
         </center>
     </div>
     <div class="content-article">
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[原文][1]</span><br><span class="line"></span><br><span class="line">照着这篇文章写的，不算翻译吧（毕竟我英文差的**）</span><br></pre></td></tr></table></figure>
+        <p><a href="https://sploitfun.wordpress.com/2015/02/26/heap-overflow-using-unlink/" target="_blank" rel="noopener">原文</a></p>
+<p>照着这篇文章写的，不算翻译吧（毕竟我英文差的**）</p>
 <h3 id="这篇文章将学习怎么使用-unlink-来进行堆溢出，先看看漏洞程序："><a href="#这篇文章将学习怎么使用-unlink-来进行堆溢出，先看看漏洞程序：" class="headerlink" title="这篇文章将学习怎么使用 unlink 来进行堆溢出，先看看漏洞程序："></a>这篇文章将学习怎么使用 unlink 来进行堆溢出，先看看漏洞程序：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line"> Heap overflow vulnerable program. </span><br><span class="line"> */</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">int main( int argc, char * argv[] )</span><br><span class="line">&#123;</span><br><span class="line">        char * first, * second;</span><br><span class="line"></span><br><span class="line">/*[1]*/ first = malloc( 666 );</span><br><span class="line">/*[2]*/ second = malloc( 12 );</span><br><span class="line">        if(argc!=1)</span><br><span class="line">/*[3]*/         strcpy( first, argv[1] );</span><br><span class="line">/*[4]*/ free( first );</span><br><span class="line">/*[5]*/ free( second );</span><br><span class="line">/*[6]*/ return( 0 );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>[3] 中 没有将 argv<a href="https://sploitfun.wordpress.com/2015/02/26/heap-overflow-using-unlink/" target="_blank" rel="noopener">1</a> 复制进堆块 first 中且没有任何限制，因此当用户输入一个大于 666 字节就会覆盖下一个 chunk。这将造成任意代码执行。</p>
-<p>这个技术的主要思想是 将 GOT 入口覆盖成 shellcode 地址，当 [5] 执行时，shellcode 就会被执行了。</p>
-<p>首先分析下 <code>glibc malloc</code> 在 free 的时候都做了什么吧。</p>
+<p><code>[3]</code> 中 没有将 <code>argv[1]</code>  复制进堆块 <code>first</code> 中且没有任何限制，因此当用户输入一个大于 <code>666</code> 字节就会覆盖下一个 <code>chunk</code> 。这将造成任意代码执行。</p>
+<p>这个技术的主要思想是 将 <code>GOT</code> 入口覆盖成 <code>shellcode</code> 地址，当 <code>[5]</code> 执行时，<code>shellcode</code> 就会被执行了。</p>
+<p>首先分析下 <code>glibc malloc</code> 在 <code>free</code> 的时候都做了什么吧。</p>
 <p>默认情况下（不影响 second 块的情况下），在 [4] 中做了如下操作：</p>
 <pre><code>1. 非 mmap 的 chunk，合并 前/后 的块
 2. 合并上一个块：
