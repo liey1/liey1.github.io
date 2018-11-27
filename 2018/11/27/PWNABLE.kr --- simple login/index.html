@@ -12,7 +12,7 @@
     
     
     
-    <title>藏着一些小秘密。。 | ruozhi</title>
+    <title>PWNABLE.kr --- simple login | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -123,7 +123,7 @@
                 
                 
                 
-                <li class="current">
+                <li class="">
                     <a href="/collections">
                         <i class="fa fa-list"></i>收藏
                     </a>
@@ -180,21 +180,36 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
-
-
+                    
 <article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>PWNABLE.kr --- simple login</span>
+    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/collections/index.html">藏着一些小秘密。。</a>
+                <a href="/2018/11/27/PWNABLE.kr --- simple login/">PWNABLE.kr --- simple login</a>
             </h1>
         </div>
         <div class="tag-article">
+            
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-09-11
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/pwn/">pwn</a>, 
+                
+                <a href="/tags/pwnable-kr/">pwnable.kr</a>
+                
             </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-11-27
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -202,28 +217,56 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/collections/index.html">藏着一些小秘密。。</a>
+                    <a href="/2018/11/27/PWNABLE.kr --- simple login/">PWNABLE.kr --- simple login</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-09-11
+                <i class="fa fa-calendar"></i> 2018-11-27
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/pwn/">pwn</a>, 
+                
+                <a href="/tags/pwnable-kr/">pwnable.kr</a>
+                
+                
+                
             </p>
         </center>
     </div>
     <div class="content-article">
-        <h3 id="看看大哥收藏的"><a href="#看看大哥收藏的" class="headerlink" title="看看大哥收藏的"></a><a href="https://422926799.github.io/2018/09/17/%E8%BD%AC%E8%87%AA%E5%8D%B3%E5%88%BB%E5%AE%89%E5%85%A8%E7%9A%84%E6%94%B6%E8%97%8F%E5%88%97%E8%A1%A8/?tdsourcetag=s_pctim_aiomsg" target="_blank" rel="noopener">看看大哥收藏的</a></h3><hr>
-<h4 id="Web-安全"><a href="#Web-安全" class="headerlink" title="Web 安全"></a>Web 安全</h4><p><a href="https://github.com/CHYbeta/Web-Security-Learning" target="_blank" rel="noopener">Web-Security-Learning</a></p>
-<h4 id="PWN-爷爷"><a href="#PWN-爷爷" class="headerlink" title="PWN 爷爷"></a>PWN 爷爷</h4><p><a href="http://pwnable.kr/?tdsourcetag=s_pctim_aiomsg" target="_blank" rel="noopener">PWNABLE</a><br><a href="https://ropemporium.com/" target="_blank" rel="noopener">ropemporium</a> &gt;&gt; <code>一系列 ROP 题目</code><br><a href="http://syscalls.kernelgrok.com/" target="_blank" rel="noopener">Linux 系统函数大全</a><br><a href="http://www.vuln.cn/6645" target="_blank" rel="noopener">一步一步学ROP之linux_x86篇</a></p>
-<h4 id="好好打-CTF-吧"><a href="#好好打-CTF-吧" class="headerlink" title="好好打 CTF 吧"></a>好好打 <code>CTF</code> 吧</h4><p><a href="https://github.com/firmianay/CTF-All-In-One" target="_blank" rel="noopener">ctf-all-in-one</a><br><a href="https://ctf-wiki.github.io/ctf-wiki/" target="_blank" rel="noopener">ctf-wiki</a> &lt;&lt; 和上面这个一起食用</p>
-<blockquote>
-<p>平台</p>
-</blockquote>
-<p><a href="https://ctftime.org/ctfs" target="_blank" rel="noopener">CTF TIMES</a> &lt;&lt; 很不错的平台<br><a href="https://www.jarvisoj.com/login" target="_blank" rel="noopener">Jarvis OJ</a><br><a href="http://www.shiyanbar.com/ctf/practice" target="_blank" rel="noopener">实验吧</a><br><a href="http://ctf.bugku.com/" target="_blank" rel="noopener">bug ku</a><br><a href="https://www.ichunqiu.com/battalion" target="_blank" rel="noopener">i 春秋</a><br><a href="https://www.ripstech.com/php-security-calendar-2017/" target="_blank" rel="noopener">php-security-calendar-2017</a></p>
+        <p><code>真的很 simple，我还做了很久，。。。</code></p>
 <hr>
+<p>此题来自 ： <a href="http://pwnable.kr/play.php" target="_blank" rel="noopener">pwnable.kr</a></p>
+<p>代码：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/27/9ed672b24044fd3c805632e229a75442.png" alt="1"></p>
+<p>很简单的代码，接收一个长度 <code>30</code> 之内的字符串进行 <code>base64decode</code> ，再判断长度是否大于 <code>0xC</code>，然后进入 <code>auth</code> 函数。</p>
+<p>这里可以注意一下第 21 行，将输入的字符串 base64解码后的字符串（v4）复制到全局变量 <code>input</code> 中。</p>
+<p>看看 <code>auth</code> 函数：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/27/8e3649bf4070865880976f4909b0deb2.png" alt="2"></p>
+<p>也很简单，把 <code>input</code> 取出来，<code>md5</code>，然后输出 <code>md5</code>，然后和 <code>f87cd...</code> 比较是否相等。</p>
+<p>最后回到 main 函数第 22 行，如果相等那么就进入 <code>correct</code> 函数。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/27/831c8b9f40773db38038af72e5ef0da5.png" alt="3"></p>
+<p>这里判断了 input 是否为 <code>-559038737</code>，难道让我们输入的是这个吗？</p>
+<p>怎么可能。。。把这个数字去 <code>md5</code> 加密一下就知道不对了。</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>一开始没仔细看 correct 函数，以为进入就直接获得 shell 了，所以在纠结能否直接通过 auth，为此我还去尝试解密 <code>f87cd601aa7fedca99018a8be88eda34</code> 这个。。无果。。。</p>
+<p>那么我就在想会不会是哪里溢出了呢。。但是 main 函数里字符限制的都很好，于是我再一次进入了 auth 函数。</p>
+<p>然后很理所当然的注意到：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/11/27/c1c1c64240b74f1b80c6a3f2918e9aab.png" alt="4"></p>
+<p><code>v4</code> 长度是 <code>8</code> ，但是 前面提到过 <code>input</code> 的长度是 <code>0xC</code>，即 <code>12</code>，所以刚好可以覆盖到上一层的 <code>ebp</code> 值</p>
+<p>bingo，于是我们想到了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 在 `auth` 函数覆盖上层函数 `ebp`，假设为 `fake_ebp`</span><br><span class="line">2. `auth` 退出后 `ebp` 为 `fake_ebp`</span><br><span class="line">3. 回到 `main` 函数也不会执行什么代码就退出了，此时执行：</span><br><span class="line">    `leave`</span><br><span class="line">    `ret`</span><br><span class="line">这两行代码很熟悉了，说白了就是：</span><br><span class="line">`leave = mov esp,ebp;pop ebp;`</span><br><span class="line">`ret = pop eip`</span><br></pre></td></tr></table></figure>
+<p>但是不要忘了，在 auth 函数退出时也执行了 <code>leave ; ret</code>。</p>
+<p>所以是执行了两次，所以我们还要找一个可以控制的地方，那么这个地方很显然只有一个 <code>input</code> 了。于是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paylaod = &apos;a&apos;*4 + getshell_addr + input_addr</span><br></pre></td></tr></table></figure></p>
+<p>这里的 <code>getshell_addr</code> 是 <code>correct</code> 函数里 <code>system(&#39;/bin/sh&#39;)</code> 那一行。</p>
+<p>这样在第一次执行完 <code>leave ; ret</code> 后 ebp 就指向了 <code>input</code> 的地址（’aaaa’ 的地方），然后第二次执行的时候：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">leave = mov esp,ebp(aaaa 的位置) ; pop ebp (此处可以无视 `ebp`，但是 `esp+4` 了，所以 `esp` 指向了 `getshell_addr` 的位置 )</span><br><span class="line">ret = mov eip,esp（此时指向了 `getshell_addr` 的位置了。）</span><br></pre></td></tr></table></figure></p>
+<p>ok，到这里分析完了。。。</p>
+<p>然而我第一次的 payload 尽然是：<code>&#39;a&#39;*8 + getshell_addr-4</code></p>
+<p>还久久的没反应过来，调试了才发现的。哎，打扰了。。</p>
 
     </div>
 </article>
-
 
 
                 </div>
@@ -340,10 +383,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/collections/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/11/27/PWNABLE.kr --- simple login/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/collections/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/11/27/PWNABLE.kr --- simple login/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
