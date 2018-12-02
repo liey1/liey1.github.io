@@ -12,7 +12,7 @@
     
     
     
-    <title>tags: pwnable.kr | ruozhi</title>
+    <title>VulnHub JIS-CTF | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -180,19 +180,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="https://liey1.github.io">ruozhi</a>
         >
-        <span>标签</span>
+        <span>VulnHub JIS-CTF</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/pwnable-kr/index.html">pwnable.kr</a>
+                <a href="/2018/12/02/VulnHub JIS-CTF/">VulnHub JIS-CTF</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/VulnHub/">VulnHub</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-12-02
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -200,21 +215,64 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/pwnable-kr/index.html">pwnable.kr</a>
+                    <a href="/2018/12/02/VulnHub JIS-CTF/">VulnHub JIS-CTF</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-12-02
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/VulnHub/">VulnHub</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2018/11/27/PWNABLE.kr --- simple login/">PWNABLE.kr --- simple login</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <p>说实话真的很丢人，这道题真的很简单。。一开始挑这道题是因为这道题百度有 WP。。。唉~ WP 选手。</p>
+<p><a href="https://www.vulnhub.com/entry/jis-ctf-vulnupload,228/" target="_blank" rel="noopener">题目地址</a></p>
+<hr>
+<p>一开始一个登陆界面，不知道怎么做？当然是扫目录啊。</p>
+<p>扫到个 <code>robots.txt</code> [不想截图]</p>
+<p>访问：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/55dc248e406b9af1805cf8d3b8eda493.png" alt="1"></p>
+<p>看到一些，但是并不是全部都能访问，一个一个访问吧：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/519019374071f37980461aced3936214.png" alt="2"></p>
+<p><code>admin_area</code> 里面有 第二个 flag</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/f7214f6d40732f0880877e9bacaeb726.png" alt="3"></p>
+<p>第一个 flag 在 <code>/flag</code> 里</p>
+<p>然后利用 <code>admin_area</code> 获取到的用户名密码登陆，发现有个上传。然后任意上传，菜刀连接。。。目录的话在 <code>robots.txt</code> 里有的，是那个 <code>uploaded_files</code> </p>
+<p>我用的是 <code>metasploit</code> 了，因为我菜刀连不上。。用的 <code>multi/http/caidao_php_backdoor_exec</code> 这个模块。。设置好就行了。。</p>
+<p>进入 <code>meterpreter</code> 之后进入 <code>shell</code>，<code>meterpreter</code> 好像看不到文件的所属用户和组</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/83dc9bd240a0c53e8033c5e2de784b36.png" alt="3"></p>
+<p>这里看到 <code>flag.txt</code> 是读取不了的，所以读取 <code>hint</code> 看看，然后这里就有了第三个 <code>flag</code> 了</p>
+<p>提示说拿到 <code>technawi</code> 的密码，这里是我看 <code>wp</code> 的地方。。原因是我确实不知道怎么找。。</p>
+<p>使用命令： <code>grep -rs technawi /</code></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/af5ac6c040f840b780c283119924e997.png" alt="此处输入图片的描述"></p>
+<p>搜索 <code>/</code> 可太慢了，剧透直接搜索 <code>/etc/</code></p>
+<p>然后打开这个：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/48eddc064020ef0f80791b17703c0a71.png" alt="此处输入图片的描述"></p>
+<p>第四个 <code>flag</code> 和 <code>technawi</code> 的密码</p>
+<p>然后就是 ssh 远程连接。。打开刚刚那个 <code>flag.txt</code> ：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/a1ff96c44045e74f801685993d31d8b7.png" alt="此处输入图片的描述"></p>
+<p>这里就结束了，，but，你有没有发现的用户是 <code>root</code>，没错，在我拿到 flag5 前我还注意到了 <code>technawi</code> 目录下有个 <code>.sudo_as_admin_successful</code> 这个文件，我在想会不会是可以 <code>sudo</code> 呢？ 于是我 <code>sudo root</code>。<br>发现果真可以。。看看 <code>/etc/sudoers</code> 文件：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/4f4bf1a0404a2198809bb653409f0f02.png" alt="此处输入图片的描述"></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/5a05c44040bf71d4805412c14e05ea4e.png" alt="此处输入图片的描述"></p>
+<p>看，<code>technawi</code> 是 <code>sudo</code> 组的。</p>
+<p>那么那个文件是干嘛的呢？？<br>我也不知道，，</p>
+<p>可以看看<a href="https://askubuntu.com/questions/813942/is-it-possible-to-stop-sudo-as-admin-successful-being-created" target="_blank" rel="noopener">这里</a></p>
+<p>反正每次 <code>sudo</code> 都会产生。。</p>
+<p>关于 sudoers 那个文件我了解到也不是很透彻，可以参考：<br><a href="http://blog.51cto.com/191226139/2059648" target="_blank" rel="noopener">sudoers</a></p>
+<p>借用里面的一张图就很明了了：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/02/02b7c1fd4014f73680734dd4360fd66d.png" alt="此处输入图片的描述"></p>
+<p>ok,就这么多，下次尽量选个难点的。。233</p>
+<hr>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -329,10 +387,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/tags/pwnable-kr/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/12/02/VulnHub JIS-CTF/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/tags/pwnable-kr/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/12/02/VulnHub JIS-CTF/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
