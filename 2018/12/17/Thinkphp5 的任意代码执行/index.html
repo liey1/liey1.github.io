@@ -12,7 +12,7 @@
     
     
     
-    <title>404 | ruozhi</title>
+    <title>Thinkphp5 的任意代码执行 | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -180,10 +180,84 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>Thinkphp5 的任意代码执行</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/12/17/Thinkphp5 的任意代码执行/">Thinkphp5 的任意代码执行</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-12-17
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/12/17/Thinkphp5 的任意代码执行/">Thinkphp5 的任意代码执行</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-12-17
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>粗糙的分析了一下。。2333</p>
+<hr>
+<p>首先看看我们的 <code>poc</code> ： <code>?s=index/think\app/invokefunction</code></p>
+<p>然后在 <code>library\App.php</code> 的 <code>run</code> 函数中：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/2222d6fd40ea972e808266127fcce619.png" alt="此处输入图片的描述"></p>
+<p>那么 <code>dispatch</code> 是什么呢？<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/24ee2f6540e5367180db0c715bd3e15e.png" alt="此处输入图片的描述"></p>
+<p>由于我没有 <code>debug</code> 插件，所以用我最爱的 <code>print_r</code>，这里我用了 <code>laysns</code>（别问，随便挑的）：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/40629b1d4072db4180d53dd8bdabd2e9.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/d202315d403d8e0280af195553b46664.png" alt="此处输入图片的描述"><br>发现在此时 dispatch 是空的且与参数无关，那么就必然进入：<code>if(empty($dispatch))</code><br>此时的 <code>$request</code> 是 ThinkPHP 的 <code>request</code> 对象：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/a93ca16040c19f8c8005d004b7c15887.png" alt="此处输入图片的描述"></p>
+<p>那我们跟入 <code>routeCheck</code>：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/73cebd6c40ced82b8076fd71dc150d7b.png" alt="此处输入图片的描述"></p>
+<p>首先 path 是获取 参数 <code>s</code> 的值:<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/896c12c54013bf2280a27fed32a505c7.png" alt="此处输入图片的描述"></p>
+<p>接下来似乎判断了，是否需要检测路由。</p>
+<p>是否都无所谓，因为我们传的一般不在路由规则里，再接下来：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/62fba49f4015473d802107c827062319.png" alt="此处输入图片的描述"></p>
+<p>判断是否需要强制路由，如果开启了强制路由，那么就会异常退出。这也就是为什么漏洞描述说：<code>在关闭强制路由的情况下。</code></p>
+<p>然后就到了：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/b13bffc1401b2a8a8067ef27f4268848.png" alt="此处输入图片的描述"></p>
+<p>这里了，如果我们路由没匹配到，此处我们就的 <code>$result</code> 就还是空，此时就会进入 <code>parseUrl</code> 函数，这个函数就不过多分析了，就是拆分 <code>$path</code>（其实是压根没看。233）</p>
+<p>看看此处的输出就很明了了：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/7dc40b0b40ea56fe80a5d9dee97bdaf2.png" alt="此处输入图片的描述"></p>
+<p>数组第一个是控制器，第二个是类，第三个是方法</p>
+<p>可以看到已经拆分成这样了，然后返回：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/188de3434023da2880c5be692c190866.png" alt="此处输入图片的描述"></p>
+<p>然后就一路执行到 <code>self:exec</code> 处。此时就执行了 <code>payload</code> 指定的类： <code>think\app</code> 中的方法：<code>invokefunction</code>。</p>
+<p>没错，但是这个文件：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/17/23eb03b74053d4a7803120ea4707c7c1.png" alt="此处输入图片的描述"></p>
+<p>这里用了反射，我不是特别明白。。反正能执行就对了。233</p>
+<p>end。。。。（说实话这种洞放我我还真看不出来。。。）</p>
 
-<!-- 404 自定义页面 -->
-<!-- 有其他想自定义的page在这里添加判断条件, 并且写好对应的模板渲染文件 -->
+    </div>
+</article>
+
 
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
@@ -299,10 +373,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/404/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/12/17/Thinkphp5 的任意代码执行/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/404/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/12/17/Thinkphp5 的任意代码执行/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">

