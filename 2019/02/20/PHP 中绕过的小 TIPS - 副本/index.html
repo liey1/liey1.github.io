@@ -12,7 +12,7 @@
     
     
     
-    <title>蓝鲸笔记管理系统（塔主nb） | ruozhi</title>
+    <title>unlink 的初级用法 | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -186,13 +186,13 @@
         <i class="fa fa-home"></i>
         <a href="https://liey1.github.io">ruozhi</a>
         >
-        <span>蓝鲸笔记管理系统（塔主nb）</span>
+        <span>unlink 的初级用法</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                <a href="/2019/02/20/PHP 中绕过的小 TIPS - 副本/">unlink 的初级用法</a>
             </h1>
         </div>
         <div class="tag-article">
@@ -200,12 +200,14 @@
             <span class="label label-gal">
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/CTF/">CTF</a>
+                <a href="/tags/ctf/">ctf</a>, 
+                
+                <a href="/tags/pwn/">pwn</a>
                 
             </span>
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2018-09-09
+                <i class="fa fa-calendar"></i> 2019-02-20
             </span>
             
         </div>
@@ -215,17 +217,19 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2018/09/09/蓝鲸笔记管理系统/">蓝鲸笔记管理系统（塔主nb）</a>
+                    <a href="/2019/02/20/PHP 中绕过的小 TIPS - 副本/">unlink 的初级用法</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2018-09-09
+                <i class="fa fa-calendar"></i> 2019-02-20
             </p>
             <p>
                 
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/CTF/">CTF</a>
+                <a href="/tags/ctf/">ctf</a>, 
+                
+                <a href="/tags/pwn/">pwn</a>
                 
                 
                 
@@ -233,82 +237,58 @@
         </center>
     </div>
     <div class="content-article">
-        <h4 id="蓝鲸官网"><a href="#蓝鲸官网" class="headerlink" title="蓝鲸官网"></a><a href="http://www.whaledu.com/" target="_blank" rel="noopener">蓝鲸官网</a></h4><h4 id="本题源码"><a href="#本题源码" class="headerlink" title="本题源码"></a><a href="http://bmob-cdn-21455.b0.upaiyun.com/2018/09/09/7490aba640f5756380392e7b8b4f97c6.zip" target="_blank" rel="noopener">本题源码</a></h4><hr>
-<p>首先先随便注册个，登陆看看：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/cc52eff0409f44bf80c7adaf12ea54fe.png" alt="前台"></p>
-<p>这里看到个提示一样的东西：访问 <code>/dbinit.sql</code> 拿到 数据库结构。</p>
-<p>再看看地址，首页的 url 地址为：<br><code>http://106.39.10.134:10002/index.php?action=front&amp;mode=index</code></p>
-<p>一开始还以为是 MVC 架构的，后来看了师傅的 WP 发现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$action=$_GET[<span class="string">'action'</span>];</span><br><span class="line">$mode=$_GET[<span class="string">'mode'</span>];</span><br><span class="line">$file=$action.<span class="string">'/'</span>.$mode.<span class="string">'.php'</span>;</span><br><span class="line"><span class="keyword">include</span>($file);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p>很明显的一个文件包含漏洞。用 <code>php://filter</code> 伪协议读取源码：</p>
-<p><code>/index.php?action=php://filter/read=convert.base64-encode/resource=front/&amp;mode=index</code></p>
-<p>但是这里读不出 <code>config.inc.php</code> 原因可以在 <code>index.php</code> 中看到：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">else if(!preg_match(&apos;/\.&#123;2&#125;/is&apos;,$_GET[&apos;action&apos;])&amp;&amp;preg_match(&apos;/^[0-9A-Za-z]+$/is&apos;,$_GET[&apos;mode&apos;])</span><br></pre></td></tr></table></figure>
-<p>mode 中不能包含 <code>.</code></p>
+        <p>hgame 的一道简单题<br>一道很（tm） 简单的题。。唉~</p>
+<p><a href="http://bmob-cdn-21459.b0.upaiyun.com/2019/02/20/3006b89c402ffb5080221f20021e2831.zip" target="_blank" rel="noopener">exp 和二进制文件</a></p>
 <hr>
-<p>共读取到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">index.php</span><br><span class="line">common.php</span><br><span class="line">admin/index.php</span><br><span class="line">admin/login.php</span><br><span class="line">admin/setpagenum.php</span><br><span class="line">front/index.php</span><br><span class="line">front/login.php</span><br><span class="line">front/newnote.php</span><br><span class="line">front/register.php</span><br></pre></td></tr></table></figure></p>
-<p>我们可以看看 <code>admin/index.php</code> 中是怎么验证是否登陆的（别问为什么一上来就看这个）：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d604a118405d4ac080cad091a15370c2.png" alt="后台首页"></p>
-<p>调用了 <code>check_login</code> 和 <code>get_level</code> 函数，这两个函数在 <code>common.php</code> 中。我们先看看这个文件的开头：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/954b0b56403c004580c6b260c9279692.png" alt="公共文件开头"></p>
-<p>很明显，这里进行了一些初始化操作。</p>
-<p>再来看看两个验证函数：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/9dca48914066fb13807322ce25d465ab.png" alt="公共文件"></p>
-<p>这里将 <code>cookie</code> 中的 <code>uid</code> 取出，以 <code>|</code>  分割，加密判断。</p>
-<p>如果成功返回当前 <code>$_SESSION</code> 中的值，否则返回 <code>False</code>。如果没登陆，那此时的值为 <code>NULL</code> ，但是判断使用的是 <code>严格</code> 判断，即：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(check_login()!==<span class="keyword">false</span>&amp;&amp;get_level()!==<span class="keyword">false</span>)</span><br></pre></td></tr></table></figure>
-<p>这两个函数的绕过方法是一样的，所以下一步我们的目标就是研究：</p>
-<p><code>$userinfo[1]==encode($userinfo[0])</code></p>
-<p>这个条件怎么成立，这个数组是我们可控的，我们可以跟进 <code>encode</code> 函数中：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> md5($_SESSION[<span class="string">'SECURITY_KEY'</span>].$str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不难理解，翻上面发现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$_SESSION[&apos;SECURITY_KEY&apos;]=rand_str(6);</span><br></pre></td></tr></table></figure>
-<p>来看看这个函数的实现：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rand_str</span><span class="params">($lenth=<span class="number">16</span>)</span></span>&#123;</span><br><span class="line">   $rand=[];</span><br><span class="line">   $_str=<span class="string">"wh"</span>;</span><br><span class="line">   <span class="keyword">while</span>($lenth)&#123;</span><br><span class="line">   $rand[]=$_str[rand(<span class="number">0</span>,strlen($_str)<span class="number">-1</span>)];</span><br><span class="line">   $lenth--;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//    var_dump($rand);</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> implode($rand);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p> 随机取6位 <code>w</code> 或 <code>h</code> </p>
-<hr>
-<p> 整理一下思路：</p>
-<p> 要想绕过登陆验证，就要让验证函数返回 <code>NULL</code>。</p>
-<p> 函数返回 <code>NULL</code> 的条件为：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if($userinfo[1]==encode($userinfo[0]))</span><br></pre></td></tr></table></figure>
-<p> $userinfo 是我们可以控制的，唯一不确定的是 encode 函数中用到的 <code>$_SESSION[&#39;SECURITY_KEY&#39;]</code></p>
-<p> 因为不对，所以我们写个脚本爆破：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import itertools</span><br><span class="line">from hashlib import md5</span><br><span class="line"></span><br><span class="line">lst = itertools.product(&quot;wh&quot;, repeat=6)</span><br><span class="line">url = &quot;http://106.39.10.134:10002/index.php?action=admin&amp;mode=index&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def m(s):</span><br><span class="line">    return md5(s).hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in lst:</span><br><span class="line">    key = m(&apos;&apos;.join(i) + &apos;admin&apos;)</span><br><span class="line">    headers = &#123;</span><br><span class="line">        &quot;Cookie&quot;: &quot;PHPSESSID=05ibpb1gtgmuq4ji4g5cgkvg07;uid=admin|&quot; + key</span><br><span class="line">    &#125;</span><br><span class="line">    r = requests.get(url, headers=headers)</span><br><span class="line">    if r.text.find(&quot;not login&quot;) &lt; 0:</span><br><span class="line">        print(headers)</span><br></pre></td></tr></table></figure>
-<p>很快就会输出 <code>Cookie</code>，添加上浏览器，再访问 后台的 <code>index</code> 即可。。</p>
-<blockquote>
-<p>踩坑</p>
+<p>先看看功能：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/2105c8e940d5f6aa80878d39ee6ab74d.png" alt="此处输入图片的描述"></p>
+<p>标准的堆题选项，依此看看功能：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/b122f16c4034db6c808c5d9a6e2b9188.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/770e91c1409c0ae080b09033e17b04f5.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/5befcbb040cad315806b3808788f95f0.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/1b93167540a7db2580f6fb5a82b47246.png" alt="此处输入图片的描述"></p>
+<p>漏洞点也很明显，就是在 <code>set_name</code> 时申请的时 0x80，但是在 <code>reset_name</code> 却读了 0x100 个字节。</p>
+<p>我们可以修改到 size，意味着我们可以 unlink 上一个块。<br>没错，unlink 有检测，但是我们还有一个指针，就是在 <code>bss</code> 段中存着 <code>name</code> 的堆地址的数组变量：<code>ptr</code>。</p>
+<p>看一下unlink 的检测：</p>
+<pre><code>if (__builtin_expect (fd-&gt;bk != p || bk-&gt;fd != p, 0))
+    malloc_printerr (&quot;corrupted double-linked list&quot;);
+</code></pre><blockquote>
+<p>理一下流程，假设我们有两个chunk（都不与 topchunk 相连），就叫 chunk1 和 chunk2 吧，大小为 0x90。</p>
+<ol>
+<li><p>调用 reset_name 编辑 chunk1 的时候去覆盖 chunk2 的 prev_szie 和 size，都覆盖为 0x90 。</p>
+</li>
+<li><p>调用 delete_name 删除 chunk2。</p>
+</li>
+<li><p>此时应该会调用： unlink(chunk1) ，执行到检测时就会触发上面的报错，因为在编辑 chunk1 时只能在 fd 的位置上随便填充一些字符（比如是 ‘a’*8），那么当 unlink chunk1 的时候获取到的 fd 就是 0x6161616161616161 ，所以 fd-&gt;bk 自然就会崩了。</p>
+</li>
+</ol>
 </blockquote>
-<p>这里还有个坑，就是如果你当前的 SESSION 已经登陆过前台，那么爆破就会失败。原因可能是 <code>$_SESSION</code> 中登陆的用户的 <code>level</code> 为 0，在 <code>get_level</code> 函数中会返回 <code>False</code></p>
-<hr>
-<p>现在我们已经登陆了后台，看看后台的代码：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/d604a118405d4ac080cad091a15370c2.png" alt="后台首页"></p>
-<p>这里拼接了个 <code>get_page_size()</code>，这个函数在 <code>common.php</code> 里，我们看看这个函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function get_page_size()&#123;</span><br><span class="line">      $sql=&quot;select num from page&quot;;</span><br><span class="line">      $res=mysql_my_query($sql);</span><br><span class="line">      $row=$res-&gt;fetch_assoc();</span><br><span class="line">      return $row[&apos;num&apos;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只做了很简单的查询。</p>
-<p>我们会发现后台页面还有个设置页面（<code>setpagenum.php</code>），进去看看：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/16bfd11e40309e538040b0c702fd600b.png" alt="后台设置页面"></p>
-<p>这个设置就是 <code>get_page_size</code> 查询并返回的表和字段，猜测关键点可能就在这了（别问为什么猜）。</p>
-<p>可以看到，这里做了 <code>is_numeric</code> 的判断，判断是否是数字。</p>
-<p>mysql 中允许这么玩：<br><code>select 0x313233;</code></p>
-<p>这条语句会输出 <code>123</code>，也就是 ASCII 码。</p>
-<p>但是不允许这么玩：</p>
-<p><code>select &#39;0x313233&#39;;</code></p>
-<p>注意这里加了单引号，此时输出 <code>0x313133</code></p>
-<p>我们发现这里是没有加引号的，所以我们传进来的值会在执行时解析成 ASCII 码。如果这是故意留的洞，那该字段的属性就不会是 <code>int</code>。因为 <code>int</code> 就不能存储字符串了。</p>
-<hr>
-<p>回顾一下查询语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$page_size=get_page_size();</span><br><span class="line">$sql=&quot;select * from note  limit 0,&quot;.$page_size;</span><br></pre></td></tr></table></figure>
-<p>思考能不能用这样的语句：select * from note  limit 0,1 union select 2 </p>
-<p>（！！！ 5.7 以后 limit 必须要放在最后，5.7以前是可以的）</p>
-<p>5.7 以后会报：<code>ERROR 1221 (HY000): Incorrect usage of UNION and LIMIT</code></p>
+<p>先直接说怎么绕过（如果不理解先不用想为什么），此处假设 ptr 的位置处存放着 chunk1 的地址（注意这个地址是从 <code>fd</code> 开始的。）：</p>
 <blockquote>
-<p>利用</p>
+<ol>
+<li>编辑 chunk1 时，前 4个 8 位（64位程序），分别是：0x0,0x81,&amp;ptr-24,&amp;ptr-16</li>
+<li>接着第一条，在编辑到 chunk2 的 prev_size 时填 0x80，size 处为 0x90。</li>
+<li>调用 delete_name 删除 chunk2</li>
+</ol>
 </blockquote>
-<p>那么现在就可以利用了：</p>
-<p>在 <code>mysql</code> 里运行：</p>
-<p><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/997ec5b94098030380caea6f2dd04cc9.png" alt="mysql"></p>
-<p>这样我们就可以很方便的获得 <code>16进制</code> 了（只要转成 ASCII 就可以了）。</p>
-<p>加上 <code>0x</code> 填上去提交：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/5fca457a40b2c53b8013764d28921f51.png" alt="填"></p>
-<p>到前台：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/09/09/f23e901240efe71180c386fb77034312.png" alt="后台首页"></p>
-<p>可以看到 3  和 2 被显示出来了。。看回一开始拿到的数据库结构，发现有个<code>flags</code> 表和 <code>flag</code> 字段，构造一下就可以出来了。。</p>
-<h3 id="突然的结束，是因为懒"><a href="#突然的结束，是因为懒" class="headerlink" title="突然的结束，是因为懒"></a>突然的结束，是因为懒</h3>
+<p>这样是不会报错的。<br>说说为什么：</p>
+<ol>
+<li>delete_name chunk2 ，首先检测到 size 的 in_use 位为 0。尝试合并上一个块</li>
+<li>获取上一个块的操作就是：chunk2 - chunk2_prev_size = chunk2-0x80。<blockquote>
+<p>但是 chunk1 的大小是 0x90，所以 0x80 是什么呢？就是 chunk1 的 fd 的位置。<br>此处的位置已经被我们伪造成了一个假的 chunk 了，这个假 chunk </p>
+</blockquote>
+</li>
+</ol>
+<p>此时这个假chunk大概长成这样：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/8a1f68e94021b3598028435c4515e842.png" alt="此处输入图片的描述"></p>
+<p>前面说过 <code>ptr</code> 这个位置存储着 <code>chunk1</code> 的地址，但是这个地址肯定是从 <code>chunk1-&gt;fd</code> 开始的，因为是 <code>malloc</code> 出来的吗。当 <code>unlink</code> 这个 <code>chunk</code> 的时候，fd-&gt;bk，因为是 64 位程序，然后 bk 在 chunk 的第四位，所以是 <code>ptr-24+24</code> ，这时候又指向了 ptr，此处 <code>bk-&gt;fd</code> 也是同理，于是便绕过了那句检测。</p>
+<p>那么那么那么。。。unlink 之后有什么用呢？<br>就在检测的下面就有两行说出了他的用处 ：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/b9758886408395ef80d27f89c2ecd5a1.png" alt="此处输入图片的描述"></p>
+<p>fd-&gt;bk = bk-&gt;fd，因为都是指向 ptr 的位置。<br>所以第二句会覆盖掉第一句的操作，所以第二句做了什么呢？</p>
+<blockquote>
+<p>ptr = bk-&gt;fd = fd</p>
+</blockquote>
+<p>那 fd 是什么呢，看上面的图，就知道是 ptr-24 啦。</p>
+<p>这时候我们的 ptr 的地址就指向 ptr-24，我们编辑 chunk1 的时候，从 ptr 找到地址：ptr-24，然后编辑。这时候我们又可以编辑 ptr 了，输出也是输出的 ptr 指向的位置。所以我们就有个任意读写啦。。。</p>
+<p>okok，就写这么多了。。大概思路就这样</p>
+<p>上面就有 exp 的文件啦。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这道题还是很简单的。。。还是太菜了。。。</p>
+<p>这tm 哪是扫尘啊，这都快扫骨灰了。</p>
+
     </div>
 </article>
 
@@ -427,10 +407,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/2018/09/09/蓝鲸笔记管理系统/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2019/02/20/PHP 中绕过的小 TIPS - 副本/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/2018/09/09/蓝鲸笔记管理系统/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2019/02/20/PHP 中绕过的小 TIPS - 副本/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">

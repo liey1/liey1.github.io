@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://liey1.github.io/"/>
-  <updated>2018-12-30T14:16:49.878Z</updated>
+  <updated>2019-02-20T14:06:10.472Z</updated>
   <id>https://liey1.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>unlink 的初级用法</title>
+    <link href="https://liey1.github.io/2019/02/20/PHP%20%E4%B8%AD%E7%BB%95%E8%BF%87%E7%9A%84%E5%B0%8F%20TIPS%20-%20%E5%89%AF%E6%9C%AC/"/>
+    <id>https://liey1.github.io/2019/02/20/PHP 中绕过的小 TIPS - 副本/</id>
+    <published>2019-02-20T14:04:30.222Z</published>
+    <updated>2019-02-20T14:06:10.472Z</updated>
+    
+    <content type="html"><![CDATA[<p>hgame 的一道简单题<br>一道很（tm） 简单的题。。唉~</p><p><a href="http://bmob-cdn-21459.b0.upaiyun.com/2019/02/20/3006b89c402ffb5080221f20021e2831.zip" target="_blank" rel="noopener">exp 和二进制文件</a></p><hr><p>先看看功能：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/2105c8e940d5f6aa80878d39ee6ab74d.png" alt="此处输入图片的描述"></p><p>标准的堆题选项，依此看看功能：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/b122f16c4034db6c808c5d9a6e2b9188.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/770e91c1409c0ae080b09033e17b04f5.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/5befcbb040cad315806b3808788f95f0.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/1b93167540a7db2580f6fb5a82b47246.png" alt="此处输入图片的描述"></p><p>漏洞点也很明显，就是在 <code>set_name</code> 时申请的时 0x80，但是在 <code>reset_name</code> 却读了 0x100 个字节。</p><p>我们可以修改到 size，意味着我们可以 unlink 上一个块。<br>没错，unlink 有检测，但是我们还有一个指针，就是在 <code>bss</code> 段中存着 <code>name</code> 的堆地址的数组变量：<code>ptr</code>。</p><p>看一下unlink 的检测：</p><pre><code>if (__builtin_expect (fd-&gt;bk != p || bk-&gt;fd != p, 0))    malloc_printerr (&quot;corrupted double-linked list&quot;);</code></pre><blockquote><p>理一下流程，假设我们有两个chunk（都不与 topchunk 相连），就叫 chunk1 和 chunk2 吧，大小为 0x90。</p><ol><li><p>调用 reset_name 编辑 chunk1 的时候去覆盖 chunk2 的 prev_szie 和 size，都覆盖为 0x90 。</p></li><li><p>调用 delete_name 删除 chunk2。</p></li><li><p>此时应该会调用： unlink(chunk1) ，执行到检测时就会触发上面的报错，因为在编辑 chunk1 时只能在 fd 的位置上随便填充一些字符（比如是 ‘a’*8），那么当 unlink chunk1 的时候获取到的 fd 就是 0x6161616161616161 ，所以 fd-&gt;bk 自然就会崩了。</p></li></ol></blockquote><p>先直接说怎么绕过（如果不理解先不用想为什么），此处假设 ptr 的位置处存放着 chunk1 的地址（注意这个地址是从 <code>fd</code> 开始的。）：</p><blockquote><ol><li>编辑 chunk1 时，前 4个 8 位（64位程序），分别是：0x0,0x81,&amp;ptr-24,&amp;ptr-16</li><li>接着第一条，在编辑到 chunk2 的 prev_size 时填 0x80，size 处为 0x90。</li><li>调用 delete_name 删除 chunk2</li></ol></blockquote><p>这样是不会报错的。<br>说说为什么：</p><ol><li>delete_name chunk2 ，首先检测到 size 的 in_use 位为 0。尝试合并上一个块</li><li>获取上一个块的操作就是：chunk2 - chunk2_prev_size = chunk2-0x80。<blockquote><p>但是 chunk1 的大小是 0x90，所以 0x80 是什么呢？就是 chunk1 的 fd 的位置。<br>此处的位置已经被我们伪造成了一个假的 chunk 了，这个假 chunk </p></blockquote></li></ol><p>此时这个假chunk大概长成这样：</p><p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/8a1f68e94021b3598028435c4515e842.png" alt="此处输入图片的描述"></p><p>前面说过 <code>ptr</code> 这个位置存储着 <code>chunk1</code> 的地址，但是这个地址肯定是从 <code>chunk1-&gt;fd</code> 开始的，因为是 <code>malloc</code> 出来的吗。当 <code>unlink</code> 这个 <code>chunk</code> 的时候，fd-&gt;bk，因为是 64 位程序，然后 bk 在 chunk 的第四位，所以是 <code>ptr-24+24</code> ，这时候又指向了 ptr，此处 <code>bk-&gt;fd</code> 也是同理，于是便绕过了那句检测。</p><p>那么那么那么。。。unlink 之后有什么用呢？<br>就在检测的下面就有两行说出了他的用处 ：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/b9758886408395ef80d27f89c2ecd5a1.png" alt="此处输入图片的描述"></p><p>fd-&gt;bk = bk-&gt;fd，因为都是指向 ptr 的位置。<br>所以第二句会覆盖掉第一句的操作，所以第二句做了什么呢？</p><blockquote><p>ptr = bk-&gt;fd = fd</p></blockquote><p>那 fd 是什么呢，看上面的图，就知道是 ptr-24 啦。</p><p>这时候我们的 ptr 的地址就指向 ptr-24，我们编辑 chunk1 的时候，从 ptr 找到地址：ptr-24，然后编辑。这时候我们又可以编辑 ptr 了，输出也是输出的 ptr 指向的位置。所以我们就有个任意读写啦。。。</p><p>okok，就写这么多了。。大概思路就这样</p><p>上面就有 exp 的文件啦。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这道题还是很简单的。。。还是太菜了。。。</p><p>这tm 哪是扫尘啊，这都快扫骨灰了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;hgame 的一道简单题&lt;br&gt;一道很（tm） 简单的题。。唉~&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://bmob-cdn-21459.b0.upaiyun.com/2019/02/20/3006b89c402ffb5080221f20021e2831.zip&quot; ta
+      
+    
+    </summary>
+    
+    
+      <category term="ctf" scheme="https://liey1.github.io/tags/ctf/"/>
+    
+      <category term="pwn" scheme="https://liey1.github.io/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP 中绕过的小 TIPS</title>
