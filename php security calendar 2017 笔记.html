@@ -150,7 +150,7 @@
                         </li>
                         
                         <li>
-                            <a href="/tags/pwn/">pwn</a>
+                            <a href="/tags/php/">php</a>
                         </li>
                         
                         
@@ -180,36 +180,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    
+                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
+
+
 <article class="article well article-body" id="article">
-    <div class="breadcrumb">
-        <i class="fa fa-home"></i>
-        <a href="https://liey1.github.io">ruozhi</a>
-        >
-        <span>php security calendar 2017 笔记</span>
-    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2019/05/08/php security calendar 2017 笔记/">php security calendar 2017 笔记</a>
+                <a href="/php security calendar 2017 笔记.html">php security calendar 2017 笔记</a>
             </h1>
         </div>
         <div class="tag-article">
-            
-            <span class="label label-gal">
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tags/web/">web</a>, 
-                
-                <a href="/tags/ctf/">ctf</a>
-                
-            </span>
-            
             <span class="label label-gal">
                 <i class="fa fa-calendar"></i> 2019-05-08
             </span>
-            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -217,22 +202,11 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2019/05/08/php security calendar 2017 笔记/">php security calendar 2017 笔记</a>
+                    <a href="/php security calendar 2017 笔记.html">php security calendar 2017 笔记</a>
                 </h4>
             </div>
             <p>
                 <i class="fa fa-calendar"></i> 2019-05-08
-            </p>
-            <p>
-                
-                <i class="fa fa-tags"></i>
-                
-                <a href="/tags/web/">web</a>, 
-                
-                <a href="/tags/ctf/">ctf</a>
-                
-                
-                
             </p>
         </center>
     </div>
@@ -274,7 +248,8 @@
 <blockquote>
 <p>unserialize(‘O:4:”Test”:100:{s:3:”ttt”;s:1:”b”;}’);</p>
 </blockquote>
-<p>但是，我在 <code>php5.6</code> 就已经不顶用了，我发现了个线上执行的，是 <code>php 5.3</code> ，可以用：<br><a href="http://www.dooccn.com/php/" target="_blank" rel="noopener">http://www.dooccn.com/php/</a><br>感兴趣可以试试，代码是这个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Test&#123;</span><br><span class="line">  public $ttt = &quot;&quot;;</span><br><span class="line">  </span><br><span class="line">  function __wakeup()&#123;</span><br><span class="line">    var_dump(&quot;uppp&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function __destruct()&#123;</span><br><span class="line">    var_dump(&quot;des&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">unserialize(&apos;O:4:&quot;Test&quot;:100:&#123;s:3:&quot;ttt&quot;;s:1:&quot;b&quot;;&#125;&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>但是，我在 <code>php5.6</code> 就已经不顶用了，我发现了个线上执行的，是 <code>php 5.3</code> ，可以用：<br><a href="http://www.dooccn.com/php/" target="_blank" rel="noopener">http://www.dooccn.com/php/</a><br>感兴趣可以试试，代码是这个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Test&#123;</span><br><span class="line">  public $ttt = &quot;&quot;;</span><br><span class="line">  </span><br><span class="line">  function __wakeup()&#123;</span><br><span class="line">    var_dump(&quot;uppp&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function __destruct()&#123;</span><br><span class="line">    var_dump(&quot;des&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">unserialize(&apos;O:4:&quot;Test&quot;:100:&#123;s:3:&quot;ttt&quot;;s:1:&quot;b&quot;;&#125;&apos;);</span><br></pre></td></tr></table></figure>
 <h1 id="day12"><a href="#day12" class="headerlink" title="day12"></a>day12</h1><p><code>xss</code>，是 <code>xss</code>，玩不动，不玩。。。</p>
 <h1 id="day13"><a href="#day13" class="headerlink" title="day13"></a>day13</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class LoginManager &#123;</span><br><span class="line">  private $em;</span><br><span class="line">  private $user;</span><br><span class="line">  private $password;</span><br><span class="line"></span><br><span class="line">  public function __construct($user, $password) &#123;</span><br><span class="line">    // $this-&gt;em = DoctrineManager::getEntityManager();</span><br><span class="line">    $this-&gt;user = $user;</span><br><span class="line">    $this-&gt;password = $password;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public function isValid() &#123;</span><br><span class="line">    $user = $this-&gt;sanitizeInput($this-&gt;user);</span><br><span class="line">    $pass = $this-&gt;sanitizeInput($this-&gt;password);</span><br><span class="line">    echo &quot;select * from test where user = &apos;$user&apos; AND password = &apos;$pass&apos;&quot;;</span><br><span class="line">    // $queryBuilder = $this-&gt;em-&gt;createQueryBuilder()</span><br><span class="line">    //   -&gt;select(&quot;COUNT(p)&quot;)</span><br><span class="line">    //   -&gt;from(&quot;User&quot;, &quot;u&quot;)</span><br><span class="line">    //   -&gt;where(&quot;user = &apos;$user&apos; AND password = &apos;$pass&apos;&quot;);</span><br><span class="line">    // $query = $queryBuilder-&gt;getQuery();</span><br><span class="line">    // return boolval($query-&gt;getSingleScalarResult());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public function sanitizeInput($input, $length = 20) &#123;</span><br><span class="line">    $input = addslashes($input);</span><br><span class="line">    if (strlen($input) &gt; $length) &#123;</span><br><span class="line">      $input = substr($input, 0, $length);</span><br><span class="line">    &#125;</span><br><span class="line">    return $input;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$auth = new LoginManager($_POST[&apos;user&apos;], $_POST[&apos;passwd&apos;]);</span><br><span class="line">if (!$auth-&gt;isValid()) &#123;</span><br><span class="line">  exit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我佛了。。<code>DQL (Doctrine Query Language)</code>。。我把它注释了，本质上和 <code>SQL</code> 一样。</p>
@@ -304,7 +279,7 @@
 </code></pre><p>  }</p>
 <p>  public function sanitizeInput($input) {<br>    return addslashes($input);<br>  }<br>}</p>
 <p>$auth = new RealSecureLoginManager(<br>  $_GET[‘user’],<br>  $_GET[‘passwd’]<br>);<br>if (!$auth-&gt;isValid()) {<br>  exit;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这题和之前那题代码差不多，不过位置变了。</span><br><span class="line"></span><br><span class="line">这里 `password` 被 `md5` 的话，第三个参数传了 `true`，会返回 `ascii` 码。`128` md5 之后最后就是 `5c`，所以会变成 `\`。然后就有注入了。</span><br><span class="line"></span><br><span class="line">这里要提一下，密码加密应该用别的，比如：[BCrypt][2]</span><br><span class="line"></span><br><span class="line"># day18</span><br></pre></td></tr></table></figure></p>
-<p>&lt;?php<br>if(-1){<br>  echo 123;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">源码是什么。。。`openssl_verify` 这个函数。。</span><br><span class="line"></span><br><span class="line">反正这道题就想告诉你 ， `-1` 也是可以进入 `if` 的，用 `===` 吧。。</span><br><span class="line"></span><br><span class="line"># day19</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php<br>if(-1){<br>  echo 123;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">源码是什么。。。`openssl_verify` 这个函数。。</span><br><span class="line"></span><br><span class="line">反正这道题就想告诉你 ， `-1` 也是可以进入 `if` 的，用 `===` 吧。。</span><br><span class="line"></span><br><span class="line"># day19</span><br></pre></td></tr></table></figure></p>
 <p>&lt;?php<br>class ImageViewer {<br>  private $file;</p>
 <p>  function __construct($file) {<br>    $this-&gt;file = “images/$file”;<br>    $this-&gt;createThumbnail();<br>  }</p>
 <p>  function createThumbnail() {<br>    echo stripcslashes(‘\101’); // 八进制<br>    $e = stripcslashes(<br>      preg_replace(<br>        ‘/[^0-9\]/‘,<br>        ‘’,<br>        isset($_GET[‘size’]) ? $_GET[‘size’] : ‘25’<br>      )<br>    );<br>    echo “/usr/bin/convert $this-&gt;file –resize $e ./thumbs/$this-&gt;file”;<br>    // system(“/usr/bin/convert $this-&gt;file –resize $e<br>    //   ./thumbs/$this-&gt;file”);<br>  }</p>
@@ -330,6 +305,7 @@ return $this-&gt;validIndices;
 
     </div>
 </article>
+
 
 
                 </div>
@@ -374,12 +350,6 @@ return $this-&gt;validIndices;
             <i class="fa fa-chevron-circle-up panel-toggle"></i>
         </div>
         <ul class="list-group list-group-flush">
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2019/05/08/php security calendar 2017 笔记/">php security calendar 2017 笔记</a>
-                </span>
-            </li>
             
             <li class="list-group-item">
                 <span class="post-title">
@@ -435,6 +405,12 @@ return $this-&gt;validIndices;
                 </span>
             </li>
             
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/10/28/从ruozhi 的角度看 pwnable 的 unlink/">堆溢出2 -- 从 ruozhi 的角度看 pwnable.kr 的 unlink</a>
+                </span>
+            </li>
+            
         </ul>
     </div>
 </aside>
@@ -446,10 +422,10 @@ return $this-&gt;validIndices;
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/2019/05/08/php security calendar 2017 笔记/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/php security calendar 2017 笔记.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/2019/05/08/php security calendar 2017 笔记/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/php security calendar 2017 笔记.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
