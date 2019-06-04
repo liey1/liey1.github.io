@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ruozhi">
+    
+    <meta name="description" content="Nothing...">
+    
+    
+    
+    
+    
+    
+    <title>记一次 ThinkXX CMS 的审计 | ruozhi</title>
+    <link href=”https://liey1.github.io“ rel=”prefetch” />
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/xsbg.gif');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg,preview5.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+</head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <div class="gal-menu gal-dropdown">
+    <div class="circle" id="gal">
+        <div class="ring">
+            <a href="https://liey1.github.io" class="menuItem" style="left: 50%; top: 15%;">首页</a>
+            
+            <a class="menuItem" style="left: 80.3109%; top: 32.5%;">下一页</a>
+            
+            <a href="/archives" class="menuItem" style="left: 80.3109%; top: 67.5%;">归档</a>
+            <a href="/plan" class="menuItem" style="left: 50%; top: 85%;">计划</a>
+            <a href="/essays" class="menuItem" style="left: 19.6891%; top: 67.5%;">随笔</a>
+            
+            <a class="menuItem" style="left: 19.6891%; top: 32.5%;">上一页</a>
+            
+        </div>
+        <audio id="audio" src="/imgs/oni.mp3"></audio>
+    </div>
+</div>
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://liey1.github.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">ruozhi</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/collections">
+                        <i class="fa fa-list"></i>收藏
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/web/">web</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/ctf/">ctf</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/php/">php</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://liey1.github.io">ruozhi</a>
+        >
+        <span>记一次 ThinkXX CMS 的审计</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/06/05/记一次 ThinkXX CMS 的审计/">记一次 ThinkXX CMS 的审计</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/审计/">审计</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-06-05
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/06/05/记一次 ThinkXX CMS 的审计/">记一次 ThinkXX CMS 的审计</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-06-05
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/web/">web</a>, 
+                
+                <a href="/tags/审计/">审计</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这个 <code>CMS</code> 的后台 <code>getshell</code> 投去安全客了，这之后又审了审，在这里记录一下。。</p>
+<p>上一篇的链接：<a href="https://www.anquanke.com/post/id/179357" target="_blank" rel="noopener">记一次某 CMS 的后台 getshell</a></p>
+<h1 id="任意文件删除"><a href="#任意文件删除" class="headerlink" title="任意文件删除"></a>任意文件删除</h1><p><code>这个洞是撞了的。。但也怪厂商为什么不修复，嘤嘤嘤。</code></p>
+<p>这个漏洞是在 <code>实名认证</code> 的时候触发的，漏洞点是 <code>上传和修改身份证照路径</code> 的时候有问题。</p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在 <code>member/authname.php</code> 中的 <code>case &#39;saveauth&#39;:</code> 下有一块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if ( !empty( $_FILES[&apos;cardpic&apos;][&apos;name&apos;] ) ) &#123;</span><br><span class="line">    ...</span><br><span class="line">    if ( is_object( $authname ) ) &#123;</span><br><span class="line">        $old_imagefile = saxue_uploadpath( &apos;card&apos; ) . $authname -&gt; getvar( &apos;cardpic&apos; ); // 获取旧图片的路径</span><br><span class="line">        saxue_delfile( $old_imagefile ); //这个函数时删除文件，无过滤</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有个很重要的判断，就是 <code>is_object( $authname )</code>，这个 <code>authname</code> 是这么赋值的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$authname_handler = saxuememberauthnamehandler :: getinstance( &quot;saxuememberauthnamehandler&quot; ); // 获取 saxue_member_authname 表</span><br><span class="line">$authname = $authname_handler -&gt; get( $_SESSION[&apos;saxueUserId&apos;] ); // 根据 SESSION 中的 UserId 获取数据库里的记录，如果有就返回一个对象</span><br></pre></td></tr></table></figure>
+<p>如果之前认证过，如果正在审核的状态，数据库中都会有一条记录，这个很重要。</p>
+<p>先看看删除文件前的那个判断：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ( is_object( $authname ) ) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就是判断数据库中是否有一条认证记录了。</p>
+<p>我们再看看是在哪里插入的这条记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if ( !empty( $_FILES[&apos;cardpic&apos;][&apos;name&apos;] ) ) &#123;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        $_POST[&apos;cardpic&apos;] = &apos;/&apos; . date( &quot;ym&quot; ) . &apos;/&apos; . date( &apos;dHis&apos; ) . mt_rand( 10000, 99999 ) . $image_postfix; // 重新赋值身份证照路径</span><br><span class="line">        </span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br><span class="line">....</span><br><span class="line">if ( is_object( $authname ) ) &#123; // 判断是否已经存在记录</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    if ( !empty( $_POST[&apos;cardpic&apos;] ) ) &#123;</span><br><span class="line">        $authname -&gt; setvar( &apos;cardpic&apos;, $_POST[&apos;cardpic&apos;] ); // 设置身份证照进某处，插入时会去这里的值</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到第一个 <code>if</code> 判断了是否上传了图片，如果上传了就重新赋值 <code>$_POST[&#39;cardpic&#39;]</code>。</p>
+<p>第二个 <code>if</code> 也是想之前说的一样，判断是否存在记录。然后判断 <code>$_POST</code> 中是否存在 <code>cardpic</code>，如果存在，就存到某个地方，待会插入用。</p>
+<p>这里第一个判断 <code>if ( !empty( $_FILES[&#39;cardpic&#39;][&#39;name&#39;] ) )</code>  是很好绕过的，我们不上传图片就可以了，然后正常 <code>POST</code> 一个 <code>cardpic</code>，就能控制这个值了。。</p>
+<p>但是第一次认证的时候，我们数据库中是没有记录的，就是 <code>$authname</code> 还不是一个 <code>object</code>。过不了第二个 <code>if</code> 的，同时前面还有个判断：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if ( !empty( $_FILES[&apos;cardpic&apos;][&apos;name&apos;] ) ) &#123; //判断是否上传图片</span><br><span class="line">    if ( 0 &lt; $_FILES[&apos;cardpic&apos;][&apos;error&apos;] ) &#123;</span><br><span class="line">        /**</span><br><span class="line">            判断图片是否正常格式正常大小</span><br><span class="line">        **/</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line">elseif ( !is_object( $authname ) ) &#123; //判断数据库是否存在记录</span><br><span class="line">    saxue_printfail( &apos;身份证照片不能为空&apos; ); // 程序退出</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就是说：</p>
+<blockquote>
+<p>如果我没上传图片，并且数据库中没有属于我的记录（即：没认证过），就退出程序。。</p>
+</blockquote>
+<p>但是无所谓，我们可以下先认证一次嘛，这里的判断意义不大，我们可以复现一下。。。</p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>首先是先注册，然后后台要先认证。（这是我觉得最尴尬的地方）</p>
+<p>登陆后，进入会员中心：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/5fecc28b40f370ac80829d4c77735371.png" alt="此处输入图片的描述"></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/972c47da4041a64080f2d79eb95e2076.png" alt="此处输入图片的描述"></p>
+<p>然后我们先正常填一次，随便上传一张图片。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/f53c11eb406cf3268012f0b218764f12.png" alt="此处输入图片的描述"></p>
+<p>到这里，我们的数据库 <code>member_authname</code> 表中，就有我们的记录了。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/7b9794f540950d1380dbe9885e4be8c3.png" alt="此处输入图片的描述"></p>
+<p>然后我们点击修改，此时会回到第一步，直接点提交审核，抓包：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/555d7efc4043b9f380000cc31e1208ad.png" alt="此处输入图片的描述"></p>
+<p>这样貌似还是能获取到 <code>$_FILES[&#39;cardpic&#39;]</code>，所以我们可以改一下：</p>
+<p>把 <code>Content-Type</code> 改成正常的 <code>POST</code> 的。就是： <code>application/x-www-form-urlencoded</code><br>然后数据改成正常的 <code>POST</code> 数据，也就是这样：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/4754a581401e9cc480a56cf13197a20a.png" alt="此处输入图片的描述"></p>
+<p>这个时候 <code>cardpic</code> 就可以改成任意值了。。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/8fd8106240f367ca8096a18ebf612ccc.png" alt="此处输入图片的描述"></p>
+<p>我们可以找一下图片的路径，就知道相对路径了：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/d4e1fa114034c12a80d37cd8da80b9a6.png" alt="此处输入图片的描述"></p>
+<p>测试一下，把他改成 <code>/../../test.txt</code>，然后再根目录建个 <code>test.txt</code> 。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/0a66a63740d8bfb180f245acfcf4614b.png" alt="此处输入图片的描述"></p>
+<p>此时再点一次修改，我们随便上传一张图片。点击提交，回到根目录，就会发现 <code>test.txt</code> 被删除了。</p>
+<h1 id="两处很尴尬的-XSS"><a href="#两处很尴尬的-XSS" class="headerlink" title="两处很尴尬的 XSS"></a>两处很尴尬的 XSS</h1><h2 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>先看看漏洞点，一个是：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/e95db4984091e72480a116d2c52e28ca.png" alt="此处输入图片的描述"></p>
+<p>这里，然后标题就是 <code>xss</code> 的地方，第二个是</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/762393494061f5cd80cf00a51195ef9b.png" alt="此处输入图片的描述"></p>
+<p>商家名称的地方。。</p>
+<p>触发点分别是后台的：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/a12b5dc640b95cc780c54639c817b187.png" alt="此处输入图片的描述"></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/08d51f3b401c912080548fcd25696434.png" alt="此处输入图片的描述"></p>
+<p>没错，这两个是一样的问题，这也不是程序员的锅，因为是有一个全局过滤的，我们看看数据库就知道：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/20fa0c62405cdcea80241b97f73db5de.png" alt="此处输入图片的描述"></p>
+<p>那为什么会触发呢？</p>
+<p>因为我对 XSS 编码不甚了解，所以就贴一下触发代码把，就不过多解释了</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/49bf8f3a40db252880fe55267f5c47ee.png" alt="此处输入图片的描述"></p>
+<p>之所以说尴尬，是因为他有字符限制，商家名称限制 30 个字节。</p>
+<p>信息标题限制 60 个，当然你会想 60 个够用了。但是他是编码在数据库的，一个 <code>&lt;</code> 就是 <code>&amp;lt;</code> 四个字节，再加上我的 <code>XSS</code> 底子也不好，无力构造，等以后 <code>XSS</code> 技术更进一步时再回来看看吧。</p>
+<h1 id="一些小问题"><a href="#一些小问题" class="headerlink" title="一些小问题"></a>一些小问题</h1><h2 id="漏洞分析-2"><a href="#漏洞分析-2" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>这里还发现了问题，之前在审计 某用ThinkPHP 开发的 <code>CMS</code> 的时候发现的过类似的问题。</p>
+<p>就是，有时候为了方便，可能程序员会使用 <code>insert($_POST)</code> ，这样会导致我插入一些程序里没验证，但是数据表里有的字段，当然可能看这段文字看的不太懂，我们可以看看问题点就明白了。</p>
+<p>这个 <code>CMS</code> 也有一样的问题，我找到两处。</p>
+<p>在点开别人发布的信息，我们看到这里有个：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/30ada4ce40fd7b7180ef6cb571b60161.png" alt="此处输入图片的描述"></p>
+<p>点击举报，然后抓包：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/43b0e37e40cbb53d80cf0f61fafd3f07.png" alt="此处输入图片的描述"></p>
+<p>在最后加上 <code>&amp;status=1&amp;punish=3</code>，看看数据库和后台。</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/b2d0525f40aeb561803b434294df4cce.png" alt="此处输入图片的描述"></p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/1b296685406909e88088ecc6eeeabce6.png" alt="此处输入图片的描述"></p>
+<p>虽然我并没有感觉到账号被冻结。。。</p>
+<p>我们可以看看为什么会出现这样的问题，看看 <code>/info/ajax.php</code> 下的 <code>case &#39;report&#39;</code> 下的代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">case &apos;report&apos;:</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        $_POST[&apos;id&apos;] = intval( $_POST[&apos;id&apos;] );</span><br><span class="line">        $_POST[&apos;report_type&apos;] = intval( $_POST[&apos;report_type&apos;] );</span><br><span class="line">        $_POST[&apos;report_reason&apos;] = saxue_htmlstr( $_POST[&apos;report_reason&apos;] );</span><br><span class="line">        saxue_getconfigs( &quot;reporttype&quot;, &quot;info&quot; );</span><br><span class="line">        </span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        include SAXUE_ROOT_PATH . &quot;/model/info_report.php&quot;;</span><br><span class="line">        $report_handler = saxueinforeporthandler :: getinstance( &quot;saxueinforeporthandler&quot; );</span><br><span class="line">        $newreport = $report_handler -&gt; create(); // 创建数据，待会插入用</span><br><span class="line">        $newreport -&gt; setvar( &quot;report_uid&quot;, $_SESSION[&apos;saxueUserId&apos;] );</span><br><span class="line">        $newreport -&gt; setvar( &quot;report_time&quot;, SAXUE_NOW_TIME );</span><br><span class="line">        if ( !$report_handler -&gt; insert( $newreport ) ) &#123; // 插入 newreport 数据</span><br><span class="line">            exit( json_encode( array( &apos;flag&apos; =&gt; 0, &apos;msg&apos; =&gt; &apos;请不要重复举报！&apos; ) ) );</span><br><span class="line">        &#125; </span><br><span class="line">        exit( json_encode( array( &apos;flag&apos; =&gt; 1, &apos;msg&apos; =&gt; &apos;感谢您的反馈！&apos; ) ) );</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>insert</code> 是插入 <code>$newreport</code> 的数据，<code>$newreport</code> 是上面 <code>create</code> 函数返回的，我们看看 <code>create</code> 函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public function create( $isNew = true, $data = &apos;&apos; ) &#123;</span><br><span class="line">    $tmpvar = &apos;Saxue&apos; . ucfirst( $this -&gt; basename );</span><br><span class="line">    $&#123;$this -&gt; basename&#125; = new $tmpvar(); // 初始化对象</span><br><span class="line">    if ( $isNew ) &#123;</span><br><span class="line">        $&#123;$this -&gt; basename&#125; -&gt; setnew();</span><br><span class="line">    &#125; </span><br><span class="line">    if ( false !== $data ) &#123;</span><br><span class="line">        if ( empty( $data ) ) &#123;</span><br><span class="line">            $data = $_POST; //从 _POST 中获取数据</span><br><span class="line">        &#125; elseif ( is_object( $data ) ) &#123;</span><br><span class="line">            $data = get_object_vars( $data );</span><br><span class="line">        &#125; </span><br><span class="line">        foreach( $&#123;$this -&gt; basename&#125; -&gt; vars as $key =&gt; $val ) &#123;</span><br><span class="line">            if ( isset ( $data[$key] ) ) &#123;</span><br><span class="line">                $&#123;$this -&gt; basename&#125; -&gt; setvar( $key, $data[$key] ); //存到对象中的某个变量中，在 insert 时会插入数据库</span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    return $&#123;$this -&gt; basename&#125;; // 返回带有数据的对象</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>大概就是说从 <code>_POST</code> 中获取数据，跳回 <code>case &#39;report&#39;</code> 下的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$_POST[&apos;id&apos;] = intval( $_POST[&apos;id&apos;] );</span><br><span class="line">$_POST[&apos;report_type&apos;] = intval( $_POST[&apos;report_type&apos;] );</span><br><span class="line">$_POST[&apos;report_reason&apos;] = saxue_htmlstr( $_POST[&apos;report_reason&apos;] );</span><br><span class="line"></span><br><span class="line">$newreport = $report_handler -&gt; create(); //创建数据对象</span><br><span class="line">if ( !$report_handler -&gt; insert( $newreport ) ) &#123;  //插入</span><br></pre></td></tr></table></figure>
+<p>这里是直接插入了，数据是从 <code>_POST</code> 中获取的，但是只控制了三个参数，所以我们可以直接在 <code>_POST</code> 中添加数据表中有，但是代码中又没控制的参数。</p>
+<p>这里我还找到一个发布文章后直接置顶的参数，但是好像也没啥用。。。就是 <code>info</code> 表中的：</p>
+<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/06/02/1702324d40cbd2b68002ba71c175fa10.png" alt="此处输入图片的描述"></p>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            ruozhi
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"><p>Nothing…</p>
+</p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/06/05/记一次 ThinkXX CMS 的审计/">记一次 ThinkXX CMS 的审计</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/06/04/5iSNS CMS 漏洞复现/">PHP审计之 5iSNS CMS 漏洞复现</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/06/04/PHP审计之 5iSNS CMS 漏洞复现/">堆溢出1 -- unlink</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/06/01/强网杯部分 Web 笔记/">强网杯部分 Web 笔记</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/05/02/四道 Code-Breaking Puzzles 的笔记/">四道 Code-Breaking Puzzles 的笔记</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/02/20/unlink 的初级用法/">unlink 的初级用法</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/30/PHP 中绕过的小 TIPS/">PHP 中绕过的小 TIPS</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/17/Thinkphp5 的任意代码执行/">Thinkphp5 的任意代码执行</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/16/记一道 web 题/">记一道 web 题</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2018/12/02/VulnHub JIS-CTF/">VulnHub JIS-CTF</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+                
+                <li class="">
+                    <a href="/2019/06/05/记一次 ThinkXX CMS 的审计/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                </li>
+                <li class="">
+                    <a href="/2019/06/05/记一次 ThinkXX CMS 的审计/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://mang0.me/" target="_blank">Mang0</a>
+    </li>
+    
+    <li>
+        <a href="http://zhanglingling.xyz/" target="_blank">张灵灵</a>
+    </li>
+    
+    <li>
+        <a href="https://yml-sec.top/friends/" target="_blank">夜莫离、</a>
+    </li>
+    
+</div>
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="https://github.com" target="_blank">github</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com" target="_blank">知乎</a>
+    </li>
+    
+</div>
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 ruozhi Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+<script src="/js/oni.js"></script>
+
+
+
+</html>
