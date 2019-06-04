@@ -12,7 +12,7 @@
     
     
     
-    <title>unlink 的初级用法 | ruozhi</title>
+    <title>堆溢出1 -- unlink | ruozhi</title>
     <link href=”https://liey1.github.io“ rel=”prefetch” />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -186,13 +186,13 @@
         <i class="fa fa-home"></i>
         <a href="https://liey1.github.io">ruozhi</a>
         >
-        <span>unlink 的初级用法</span>
+        <span>堆溢出1 -- unlink</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2019/02/20/unlink 的初级用法/">unlink 的初级用法</a>
+                <a href="/2019/06/04/PHP审计之 5iSNS CMS 漏洞复现/">堆溢出1 -- unlink</a>
             </h1>
         </div>
         <div class="tag-article">
@@ -200,14 +200,12 @@
             <span class="label label-gal">
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/ctf/">ctf</a>, 
-                
-                <a href="/tags/pwn/">pwn</a>
+                <a href="/tags/ctf/">ctf</a>
                 
             </span>
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2019-02-20
+                <i class="fa fa-calendar"></i> 2019-06-04
             </span>
             
         </div>
@@ -217,19 +215,17 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2019/02/20/unlink 的初级用法/">unlink 的初级用法</a>
+                    <a href="/2019/06/04/PHP审计之 5iSNS CMS 漏洞复现/">堆溢出1 -- unlink</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2019-02-20
+                <i class="fa fa-calendar"></i> 2019-06-04
             </p>
             <p>
                 
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/ctf/">ctf</a>, 
-                
-                <a href="/tags/pwn/">pwn</a>
+                <a href="/tags/ctf/">ctf</a>
                 
                 
                 
@@ -237,57 +233,92 @@
         </center>
     </div>
     <div class="content-article">
-        <p>hgame 的一道简单题<br>一道很（tm） 简单的题。。唉~</p>
-<p><a href="http://bmob-cdn-21459.b0.upaiyun.com/2019/02/20/3006b89c402ffb5080221f20021e2831.zip" target="_blank" rel="noopener">exp 和二进制文件</a></p>
+        <p><a href="https://sploitfun.wordpress.com/2015/02/26/heap-overflow-using-unlink/" target="_blank" rel="noopener">原文</a></p>
+<p>照着这篇文章写的，不算翻译吧（毕竟我英文差的**）</p>
+<h3 id="这篇文章将学习怎么使用-unlink-来进行堆溢出，先看看漏洞程序："><a href="#这篇文章将学习怎么使用-unlink-来进行堆溢出，先看看漏洞程序：" class="headerlink" title="这篇文章将学习怎么使用 unlink 来进行堆溢出，先看看漏洞程序："></a>这篇文章将学习怎么使用 unlink 来进行堆溢出，先看看漏洞程序：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line"> Heap overflow vulnerable program. </span><br><span class="line"> */</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">int main( int argc, char * argv[] )</span><br><span class="line">&#123;</span><br><span class="line">        char * first, * second;</span><br><span class="line"></span><br><span class="line">/*[1]*/ first = malloc( 666 );</span><br><span class="line">/*[2]*/ second = malloc( 12 );</span><br><span class="line">        if(argc!=1)</span><br><span class="line">/*[3]*/         strcpy( first, argv[1] );</span><br><span class="line">/*[4]*/ free( first );</span><br><span class="line">/*[5]*/ free( second );</span><br><span class="line">/*[6]*/ return( 0 );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先看看程序的 <code>[3]</code> 中做了什么：<br>    将 <code>argv[1]</code>  复制进堆块 <code>first</code> 中 且没有任何限制，因此当用户输入一个大于 <code>666</code> 字节就会覆盖下一个 <code>chunk</code> 。</p>
+<p>首先分析下 <code>glibc malloc</code> 在 <code>free</code> 的时候都做了什么吧。</p>
+<p>当输入的字节小于 666 字节时，在 <code>[4]</code> 中做了如下操作：</p>
+<pre><code>1. 非 mmap 的 chunk，合并 前/后 的块
+2. 合并上一个块：
+    * 如果当前释放的 chunk 中的 P 位为 0，就将上一个块在 `bins` 中移除（ `unlink` 操作），将当前块的大小增加上上一个块的大小 并且 将当前块指向上一个块。
+    * 在这个例子中 P 位为 1（第一个块默认的 P 位都为 1，尽管上一个块不存在）。
+3. 合并下一个块：
+    * 当下一个块为 free 时，将下一个块从 bins 中移除（ 也是执行 `unlink`  ），将当前块的大小加上下一个块的大小。（在这里例子中下一个块为 second，所以也不会合并）
+    * 有意思的是，获取下一个块是否为 free 是根据下下个块的 P 位来决定的。
+4. 然后添加 合并后的块 到  unsorted bin 中。在这里例子中没有发生合并，所以只用将  first 添加到 unsorted bin 就好。
+</code></pre><p>下面说说攻击者在第三行中覆盖 second 这块内存的内容：</p>
+<ul>
+<li>prev_size = 覆盖成偶数（使 PREV_INUSE 位为 0）</li>
+<li>size = -4</li>
+<li>fd = free address -12</li>
+<li>bk = shellcode address</li>
+</ul>
+<p>在攻击者的用向下，[4] 做了如下事：</p>
+<ol>
+<li>合并上下堆块</li>
+<li>合并上一个块：和上面分析的一样，不再重复</li>
+<li>合并下一个块：<br> 判断下一个块是否为空闲，前面提到过是根据下下个块的 P 位来判断的。那么怎么找到下下个块的地址呢？就是：下一个块的地址+下一个块大小。在这里我们把下一块的大小变成了-4，所以他 下一块的地址（prev_size）+（-4） 又指向了自己</li>
+</ol>
 <hr>
-<p>先看看功能：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/2105c8e940d5f6aa80878d39ee6ab74d.png" alt="此处输入图片的描述"></p>
-<p>标准的堆题选项，依此看看功能：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/b122f16c4034db6c808c5d9a6e2b9188.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/770e91c1409c0ae080b09033e17b04f5.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/5befcbb040cad315806b3808788f95f0.png" alt="此处输入图片的描述"><br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/1b93167540a7db2580f6fb5a82b47246.png" alt="此处输入图片的描述"></p>
-<p>漏洞点也很明显，就是在 <code>set_name</code> 时申请的时 0x80，但是在 <code>reset_name</code> 却读了 0x100 个字节。</p>
-<p>我们可以修改到 size，意味着我们可以 unlink 上一个块。<br>没错，unlink 有检测，但是我们还有一个指针，就是在 <code>bss</code> 段中存着 <code>name</code> 的堆地址的数组变量：<code>ptr</code>。</p>
-<p>看一下unlink 的检测：</p>
-<pre><code>if (__builtin_expect (fd-&gt;bk != p || bk-&gt;fd != p, 0))
-    malloc_printerr (&quot;corrupted double-linked list&quot;);
-</code></pre><blockquote>
-<p>理一下流程，假设我们有两个chunk（都不与 topchunk 相连），就叫 chunk1 和 chunk2 吧，大小为 0x90。</p>
-<ol>
-<li><p>调用 reset_name 编辑 chunk1 的时候去覆盖 chunk2 的 prev_szie 和 size，都覆盖为 0x90 。</p>
-</li>
-<li><p>调用 delete_name 删除 chunk2。</p>
-</li>
-<li><p>此时应该会调用： unlink(chunk1) ，执行到检测时就会触发上面的报错，因为在编辑 chunk1 时只能在 fd 的位置上随便填充一些字符（比如是 ‘a’*8），那么当 unlink chunk1 的时候获取到的 fd 就是 0x6161616161616161 ，所以 fd-&gt;bk 自然就会崩了。</p>
-</li>
-</ol>
-</blockquote>
-<p>先直接说怎么绕过（如果不理解先不用想为什么），此处假设 ptr 的位置处存放着 chunk1 的地址（注意这个地址是从 <code>fd</code> 开始的。）：</p>
+<p>回顾一下 unlink 的过程：</p>
+<pre><code>1. 首先传入要 unlink 的堆块，假定变量 P
+2. BK = P-&gt;bk , FD = P-&gt;fd // 将 P 的 bk 和 fd 分别给 BK 和 FD 变量
+3. FD-&gt;bk = BK, BK-&gt;fd = FD（因为用文字太绕了。）
+4. //用文字描述就是：当前块的上一个块的下一个块（即：(P-&gt;bk)BK-&gt;fd） 等于 当前块的下一块。下一块的上一块同理。
+</code></pre><p>来张图比什么都清晰：<br><img src="http://bmob-cdn-21452.b0.upaiyun.com/2018/10/27/18118dc040318ddb80925a647dcc57c0.png" alt="unlink过程图"> —此图来自 ctf-wiki</p>
+<hr>
+<p>回到上面，在 <code>[3]</code> 处覆盖了 <code>second</code> 堆块后：<br>此时 <code>second</code> 堆应该是这样的：</p>
 <blockquote>
-<ol>
-<li>编辑 chunk1 时，前 4个 8 位（64位程序），分别是：0x0,0x81,&amp;ptr-24,&amp;ptr-16</li>
-<li>接着第一条，在编辑到 chunk2 的 prev_size 时填 0x80，size 处为 0x90。</li>
-<li>调用 delete_name 删除 chunk2</li>
-</ol>
+<p>second</p>
 </blockquote>
-<p>这样是不会报错的。<br>说说为什么：</p>
-<ol>
-<li>delete_name chunk2 ，首先检测到 size 的 in_use 位为 0。尝试合并上一个块</li>
-<li>获取上一个块的操作就是：chunk2 - chunk2_prev_size = chunk2-0x80。<blockquote>
-<p>但是 chunk1 的大小是 0x90，所以 0x80 是什么呢？就是 chunk1 的 fd 的位置。<br>此处的位置已经被我们伪造成了一个假的 chunk 了，这个假 chunk </p>
-</blockquote>
-</li>
-</ol>
-<p>此时这个假chunk大概长成这样：</p>
-<p><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/8a1f68e94021b3598028435c4515e842.png" alt="此处输入图片的描述"></p>
-<p>前面说过 <code>ptr</code> 这个位置存储着 <code>chunk1</code> 的地址，但是这个地址肯定是从 <code>chunk1-&gt;fd</code> 开始的，因为是 <code>malloc</code> 出来的吗。当 <code>unlink</code> 这个 <code>chunk</code> 的时候，fd-&gt;bk，因为是 64 位程序，然后 bk 在 chunk 的第四位，所以是 <code>ptr-24+24</code> ，这时候又指向了 ptr，此处 <code>bk-&gt;fd</code> 也是同理，于是便绕过了那句检测。</p>
-<p>那么那么那么。。。unlink 之后有什么用呢？<br>就在检测的下面就有两行说出了他的用处 ：<br><img src="http://bmob-cdn-22342.b0.upaiyun.com/2019/02/20/b9758886408395ef80d27f89c2ecd5a1.png" alt="此处输入图片的描述"></p>
-<p>fd-&gt;bk = bk-&gt;fd，因为都是指向 ptr 的位置。<br>所以第二句会覆盖掉第一句的操作，所以第二句做了什么呢？</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th style="text-align:left">—–</th>
+<th style="text-align:left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prev_size</td>
+<td style="text-align:left">—–</td>
+<td style="text-align:left">偶数（最后一位为 P 位，只要是偶数最后一位就为 0，因此偶数即可）</td>
+</tr>
+<tr>
+<td>size</td>
+<td style="text-align:left">—–</td>
+<td style="text-align:left">-4 （减去4，指向了自己）</td>
+</tr>
+<tr>
+<td>fd</td>
+<td style="text-align:left">—–</td>
+<td style="text-align:left">GOT入口-12 （稍后解释）</td>
+</tr>
+<tr>
+<td>bk</td>
+<td style="text-align:left">—–</td>
+<td style="text-align:left">shellcode 地址</td>
+</tr>
+</tbody>
+</table>
+<p><code>回顾一下代码的 [4]：free(first)</code></p>
 <blockquote>
-<p>ptr = bk-&gt;fd = fd</p>
+<p>执行这句话的时候发生了什么？</p>
 </blockquote>
-<p>那 fd 是什么呢，看上面的图，就知道是 ptr-24 啦。</p>
-<p>这时候我们的 ptr 的地址就指向 ptr-24，我们编辑 chunk1 的时候，从 ptr 找到地址：ptr-24，然后编辑。这时候我们又可以编辑 ptr 了，输出也是输出的 ptr 指向的位置。所以我们就有个任意读写啦。。。</p>
-<p>okok，就写这么多了。。大概思路就这样</p>
-<p>上面就有 exp 的文件啦。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这道题还是很简单的。。。还是太菜了。。。</p>
-<p>这tm 哪是扫尘啊，这都快扫骨灰了。</p>
+<ol>
+<li>释放掉 first 块</li>
+<li>判断上一个块是否空闲，在这里不是空闲的，所以跳过</li>
+<li>判断下一个块是否空闲，在这里判断的是 second 块，原本应该是 非空闲 的，but 这里的 size 是 -4，所以取下下块的时候又跑到了自己块的 prev_size 处，这里的值是偶数，所以 P 位为0，所以就未占用咯，所以要合并咯，合并就要用到 unlink 咯。</li>
+</ol>
+<blockquote>
+<p>那么在这里 unlink 都做了什么呢？</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FD = P-&gt;fd （ FD = GOT入口-12 ）</span><br><span class="line">BK = P-&gt;bk （ BK = shellcode地址 ）</span><br><span class="line">FD-&gt;bk = BK（ FD-&gt;bk = GOT入口，因为 FD 是 GOT-12，bk 位于 FD 12个字节处，所以 FD-&gt;bk 就等于 FD+12 的地址 ）</span><br><span class="line">BK-&gt;fd = FD（这里是什么不重要了，但是此处的内容也会被破坏，所以要注意）</span><br></pre></td></tr></table></figure>
+<p>在这里 GOT 入口表被覆盖成 shellcode 地址了。</p>
+<p>这里覆盖 GOT 入口表本身没什么意义，只是一个思路吧，当作迈出去的第一步。</p>
+<p>至此， unlink 的利用就算结束了，下篇文章分析一道，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while True:</span><br><span class="line">    print &quot;特别特别特别&quot;</span><br><span class="line">print &quot;简单的题目。&quot;</span><br></pre></td></tr></table></figure></p>
 
     </div>
 </article>
@@ -407,10 +438,10 @@
             <ul class="nav nav-pills pills-gal">
                 
                 <li class="">
-                    <a href="/2019/02/20/unlink 的初级用法/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
+                    <a href="/2019/06/04/PHP审计之 5iSNS CMS 漏洞复现/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">我大哥的Blog</a>
                 </li>
                 <li class="">
-                    <a href="/2019/02/20/unlink 的初级用法/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2019/06/04/PHP审计之 5iSNS CMS 漏洞复现/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
             </ul>
             <div class="tab-content">
